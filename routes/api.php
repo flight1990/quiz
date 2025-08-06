@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\QuizController;
 use App\Http\Controllers\V1\TokenController;
 use App\Http\Controllers\V1\UserController;
 use Illuminate\Http\Request;
@@ -19,6 +20,14 @@ Route::middleware('auth:api')->group(function () {
             Route::get('/{id}', [UserController::class, 'findUserById']);
             Route::patch('/{id}', [UserController::class, 'updateUser']);
             Route::delete('/{id}', [UserController::class, 'deleteUser']);
+        });
+
+        Route::prefix('quizzes')->group(function () {
+            Route::get('/', [QuizController::class, 'getQuizzes']);
+            Route::post('/', [QuizController::class, 'createQuiz']);
+            Route::get('/{id}', [QuizController::class, 'findQuizById']);
+            Route::patch('/{id}', [QuizController::class, 'updateQuiz']);
+            Route::delete('/{id}', [QuizController::class, 'deleteQuiz']);
         });
     });
 });
