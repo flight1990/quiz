@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Resources\V1\Quizzes;
+namespace App\Http\Resources\V1\Units;
 
+use App\Http\Resources\V1\Users\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class QuizResource extends JsonResource
+class UnitResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +17,10 @@ class QuizResource extends JsonResource
     {
         return [
             'id' => $this->whenHas('id'),
-            'title' => $this->whenHas('title'),
-            'slug' => $this->whenHas('slug'),
-            'is_anonymous' => $this->whenHas('is_anonymous'),
-            'is_active' => $this->whenHas('is_active'),
+            'name' => $this->whenHas('name'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
+            'users' => UserResource::collection($this->whenLoaded('users')),
         ];
     }
 }
