@@ -16,7 +16,8 @@ class UpdateUserRequest extends FormRequest
         return [
             'name' => ['sometimes', 'string', 'max:200'],
             'email' => ['sometimes', 'email', 'max:200', 'unique:users,email,'.$this['id']],
-            'password' => ['sometimes', 'min:6', 'max:50', 'confirmed']
+            'password' => ['sometimes', 'min:6', 'max:50', 'confirmed'],
+            'unit_id' => ['sometimes', 'nullable', 'int', 'exists:units,id'],
         ];
     }
 }
