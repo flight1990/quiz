@@ -21,7 +21,8 @@ class UpdateQuizRequest extends FormRequest
             'questions.*.id' => ['sometimes', 'integer', 'exists:questions,id'],
             'questions.*.text' => ['required', 'string', 'max:6000'],
             'questions.*.order' => ['nullable', 'integer'],
-            'questions.*.is_multiple' => ['nullable', 'boolean'],
+            'questions.*.answer_type' => ['nullable', 'string', 'in:text,radio,checkbox'],
+            'questions.*.answer_timer' => ['nullable', 'integer'],
         ];
     }
 }

@@ -18,7 +18,6 @@ class QuizResource extends JsonResource
         return [
             'id' => $this->whenHas('id'),
             'title' => $this->whenHas('title'),
-            'slug' => $this->whenHas('slug'),
             'is_anonymous' => $this->whenHas('is_anonymous'),
             'is_active' => $this->whenHas('is_active'),
             'created_at' => $this->whenHas('created_at'),

@@ -16,7 +16,8 @@ class CreateQuestionRequest extends FormRequest
         return [
             'text' => ['required', 'string', 'max:6000'],
             'order' => ['nullable', 'integer'],
-            'is_multiple' => ['nullable', 'boolean'],
+            'answer_type' => ['nullable', 'string', 'in:text,radio,checkbox'],
+            'answer_timer' => ['nullable', 'integer'],
             'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
         ];
     }
