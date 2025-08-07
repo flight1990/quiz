@@ -2,8 +2,8 @@ composer i
 
 php artisan migrate
 php artisan db:seed
-
 php artisan key:generate
-php artisan passport:keys
 
+php artisan passport:keys
+php artisan passport:client --password
 
