@@ -16,7 +16,12 @@ class UpdateQuizRequest extends FormRequest
         return [
             'title' => ['sometimes', 'string', 'max:200'],
             'is_anonymous' => ['sometimes', 'boolean'],
-            'is_active' => ['sometimes', 'boolean']
+            'is_active' => ['sometimes', 'boolean'],
+            'questions' => ['sometimes', 'array'],
+            'questions.*.id' => ['sometimes', 'integer', 'exists:questions,id'],
+            'questions.*.text' => ['required', 'string', 'max:6000'],
+            'questions.*.order' => ['nullable', 'integer'],
+            'questions.*.is_multiple' => ['nullable', 'boolean'],
         ];
     }
 }
