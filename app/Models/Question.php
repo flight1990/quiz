@@ -10,12 +10,9 @@ class Question extends Model
     protected $fillable = [
         'text',
         'order',
-        'is_multiple',
         'quiz_id',
-    ];
-
-    protected $casts = [
-        'is_multiple' => 'boolean',
+        'answer_type',
+        'answer_timer',
     ];
 
     public function quiz(): BelongsTo
