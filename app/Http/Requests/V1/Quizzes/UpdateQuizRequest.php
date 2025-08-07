@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\V1\Quizzes;
 
+use App\Http\Requests\V1\Questions\CreateQuestionRequest;
+use App\Http\Requests\V1\Questions\UpdateQuestionRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateQuizRequest extends FormRequest
@@ -13,16 +15,21 @@ class UpdateQuizRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $questionsRules = [
+            'questions' => ['sometimes', 'array'],
+            'questions.*.id' => ['sometimes', 'integer', 'exists:questions,id'],
+        ];
+
+        $updateQuestionRules = UpdateQuestionRequest::getRules(['quiz_id']);
+
+        foreach ($updateQuestionRules as $key => $rule) {
+            $questionsRules['questions.*.' . $key ] = $rule;
+        }
+
+        return array_merge([
             'title' => ['sometimes', 'string', 'max:200'],
             'is_anonymous' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
-            'questions' => ['sometimes', 'array'],
-            'questions.*.id' => ['sometimes', 'integer', 'exists:questions,id'],
-            'questions.*.text' => ['required', 'string', 'max:6000'],
-            'questions.*.order' => ['nullable', 'integer'],
-            'questions.*.answer_type' => ['nullable', 'string', 'in:text,radio,checkbox'],
-            'questions.*.answer_timer' => ['nullable', 'integer'],
-        ];
+        ], $questionsRules);
     }
 }
