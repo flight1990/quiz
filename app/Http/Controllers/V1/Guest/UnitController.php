@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers\V1\Guest;
 
 use App\Actions\Units\V1\CreateUnitAction;
 use App\Actions\Units\V1\DeleteUnitAction;
@@ -9,18 +9,18 @@ use App\Actions\Units\V1\GetUnitsAction;
 use App\Actions\Units\V1\UpdateUnitAction;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\V1\Units\CreateUnitRequest;
-use App\Http\Requests\V1\Units\GetUnitsRequest;
 use App\Http\Requests\V1\Units\UpdateUnitRequest;
 use App\Http\Resources\V1\Units\UnitResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UnitController extends ApiController
 {
-    public function getUnits(GetUnitsRequest $request): ResourceCollection|JsonResource
+    public function getUnits(Request $request): ResourceCollection|JsonResource
     {
-        $data = app(GetUnitsAction::class)->run($request->validated());
+        $data = app(GetUnitsAction::class)->run($request->all());
         return $this->respondWithSuccess(UnitResource::collection($data));
     }
 

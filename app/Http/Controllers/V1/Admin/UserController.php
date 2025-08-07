@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\V1;
+namespace App\Http\Controllers\V1\Admin;
 
 use App\Actions\Users\V1\CreateUserAction;
 use App\Actions\Users\V1\DeleteUserAction;
@@ -8,18 +8,18 @@ use App\Actions\Users\V1\GetUsersAction;
 use App\Actions\Users\V1\UpdateUserAction;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\V1\Users\CreateUserRequest;
-use App\Http\Requests\V1\Users\GetUsersRequest;
 use App\Http\Requests\V1\Users\UpdateUserRequest;
 use App\Http\Resources\V1\Users\UserResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserController extends ApiController
 {
-    public function getUsers(GetUsersRequest $request): ResourceCollection|JsonResource
+    public function getUsers(Request $request): ResourceCollection|JsonResource
     {
-        $data = app(GetUsersAction::class)->run($request->validated());
+        $data = app(GetUsersAction::class)->run($request->all());
         return $this->respondWithSuccess(UserResource::collection($data));
     }
 
