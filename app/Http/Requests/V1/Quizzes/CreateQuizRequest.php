@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\V1\Quizzes;
 
+use App\Http\Requests\V1\Questions\CreateQuestionRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateQuizRequest extends FormRequest
@@ -13,15 +14,20 @@ class CreateQuizRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $questionsRules = [
+            'questions' => ['sometimes', 'array'],
+        ];
+
+        $createQuestionRules = CreateQuestionRequest::getRules(['quiz_id']);
+
+        foreach ($createQuestionRules as $key => $rule) {
+            $questionsRules['questions.*.' . $key] = $rule;
+        }
+
+        return array_merge([
             'title' => ['required', 'string', 'max:200'],
             'is_anonymous' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
-            'questions' => ['sometimes', 'array'],
-            'questions.*.text' => ['required', 'string', 'max:6000'],
-            'questions.*.order' => ['nullable', 'integer'],
-            'questions.*.answer_type' => ['nullable', 'string', 'in:text,radio,checkbox'],
-            'questions.*.answer_timer' => ['nullable', 'integer'],
-        ];
+        ], $questionsRules);
     }
 }

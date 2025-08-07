@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\OptionController as AdminOptionController;
 use App\Http\Controllers\V1\Admin\QuestionController as AdminQuestionController;
 use App\Http\Controllers\V1\Admin\GuestUserController as AdminGuestUserController;
 use App\Http\Controllers\V1\Admin\QuizController as AdminQuizController;
@@ -51,6 +52,14 @@ Route::prefix('v1')->group(function () {
             Route::get('/{id}', [AdminQuestionController::class, 'findQuestionById']);
             Route::patch('/{id}', [AdminQuestionController::class, 'updateQuestion']);
             Route::delete('/{id}', [AdminQuestionController::class, 'deleteQuestion']);
+        });
+
+        Route::prefix('options')->group(function () {
+            Route::get('/', [AdminOptionController::class, 'getOptions']);
+            Route::post('/', [AdminOptionController::class, 'createOption']);
+            Route::get('/{id}', [AdminOptionController::class, 'findOptionById']);
+            Route::patch('/{id}', [AdminOptionController::class, 'updateOption']);
+            Route::delete('/{id}', [AdminOptionController::class, 'deleteOption']);
         });
 
         Route::prefix('guest-users')->group(function () {
