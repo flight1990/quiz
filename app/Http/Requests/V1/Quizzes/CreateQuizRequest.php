@@ -16,7 +16,11 @@ class CreateQuizRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:200'],
             'is_anonymous' => ['nullable', 'boolean'],
-            'is_active' => ['nullable', 'boolean']
+            'is_active' => ['nullable', 'boolean'],
+            'questions' => ['sometimes', 'array'],
+            'questions.*.text' => ['required', 'string', 'max:6000'],
+            'questions.*.order' => ['nullable', 'integer'],
+            'questions.*.is_multiple' => ['nullable', 'boolean'],
         ];
     }
 }
