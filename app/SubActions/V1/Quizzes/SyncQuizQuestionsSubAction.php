@@ -3,8 +3,8 @@
 namespace App\SubActions\V1\Quizzes;
 
 use App\Models\Quiz;
-use App\Tasks\Questions\V1\CreateQuestionTask;
-use App\Tasks\Questions\V1\UpdateQuestionTask;
+use App\SubActions\V1\Questions\CreateQuestionSubAction;
+use App\SubActions\V1\Questions\UpdateQuestionSubAction;
 use Illuminate\Support\Facades\DB;
 
 class SyncQuizQuestionsSubAction
@@ -16,9 +16,9 @@ class SyncQuizQuestionsSubAction
 
             foreach ($questions as $data) {
                 if (isset($data['id'])) {
-                    $question = app(UpdateQuestionTask::class)->run($data, $data['id']);
+                    $question = app(UpdateQuestionSubAction::class)->run($data, $data['id']);
                 } else {
-                    $question = app(CreateQuestionTask::class)->run(array_merge(['quiz_id' => $quiz['id']], $data));
+                    $question = app(CreateQuestionSubAction::class)->run(array_merge(['quiz_id' => $quiz['id']], $data));
                 }
 
                 $existingIds[] = $question['id'];
