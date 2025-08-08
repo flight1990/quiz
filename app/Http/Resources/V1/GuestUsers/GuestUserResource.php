@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\GuestUsers;
 
 use App\Http\Resources\V1\Answers\AnswerResource;
+use App\Http\Resources\V1\QuizUser\QuizUserResource;
 use App\Http\Resources\V1\Units\UnitResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -28,6 +29,7 @@ class GuestUserResource extends JsonResource
             'updated_at' => $this->whenHas('updated_at'),
             'unit' => new UnitResource($this->whenLoaded('unit')),
             'answers' => AnswerResource::collection($this->whenLoaded('answers')),
+            'quiz_users' => QuizUserResource::collection($this->whenLoaded('quizUsers')),
         ];
     }
 }
