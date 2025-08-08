@@ -15,4 +15,9 @@ class Unit extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function guestUsers(): HasMany
+    {
+        return $this->hasMany(GuestUser::class);
+    }
 }

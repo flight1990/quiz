@@ -20,6 +20,6 @@ class FindGuestUserByUuidTask extends Task
     {
         return $this->repository
             ->pushCriteria(new WhereFieldCriteria('uuid', $uuid))
-            ->first();
+            ->firstOrFail();
     }
 }
