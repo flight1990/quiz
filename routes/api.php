@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\QuizUserController as AdminQuizUserController;
 use App\Http\Controllers\V1\Admin\AnswerController as AdminAnswerController;
 use App\Http\Controllers\V1\Admin\OptionController as AdminOptionController;
 use App\Http\Controllers\V1\Admin\QuestionController as AdminQuestionController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\V1\Admin\GuestUserController as AdminGuestUserControlle
 use App\Http\Controllers\V1\Admin\QuizController as AdminQuizController;
 use App\Http\Controllers\V1\Admin\UnitController as AdminUnitController;
 use App\Http\Controllers\V1\Admin\UserController as AdminUserController;
+use App\Http\Controllers\V1\Guest\QuizUserController as GuestQuizUserController;
 use App\Http\Controllers\V1\Guest\UnitController as GuestUnitController;
 use App\Http\Controllers\V1\Guest\AnswerController as GuestAnswerController;
 use App\Http\Controllers\V1\Guest\GuestUserController as GuestGuestUserController;
@@ -75,11 +77,20 @@ Route::prefix('v1')->group(function () {
             Route::patch('/{id}', [AdminGuestUserController::class, 'updateGuestUser']);
             Route::delete('/{id}', [AdminGuestUserController::class, 'deleteGuestUser']);
         });
+
+        Route::prefix('quiz-users')->group(function () {
+            Route::get('/', [AdminQuizUserController::class, 'getQuizUsers']);
+            Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser']);
+        });
     });
 
     Route::prefix('guest-users')->group(function () {
         Route::post('/', [GuestGuestUserController::class, 'createGuestUser']);
         Route::get('/{uuid}', [GuestGuestUserController::class, 'findGuestUserByUuid']);
+    });
+
+    Route::prefix('quiz-users')->group(function () {
+        Route::post('/', [GuestQuizUserController::class, 'createQuizUser']);
     });
 
     Route::prefix('answers')->group(function () {

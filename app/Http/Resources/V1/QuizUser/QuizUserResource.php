@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Resources\V1\Answers;
+namespace App\Http\Resources\V1\QuizUser;
 
 use App\Http\Resources\V1\GuestUsers\GuestUserResource;
-use App\Http\Resources\V1\Options\OptionResource;
-use App\Http\Resources\V1\Questions\QuestionResource;
+use App\Http\Resources\V1\Quizzes\QuizResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class AnswerResource extends JsonResource
+class QuizUserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,15 +19,13 @@ class AnswerResource extends JsonResource
     {
         return [
             'id' => $this->whenHas('id'),
-            'question_id' => $this->whenHas('question_id'),
+            'quiz_id' => $this->whenHas('quiz_id'),
             'guest_user_id' => $this->whenHas('guest_user_id'),
-            'option_id' => $this->whenHas('option_id'),
-            'other' => $this->whenHas('other'),
+            'completed_at' => $this->whenHas('completed_at'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
-            'question' => new QuestionResource($this->whenLoaded('question')),
+            'quiz' => new QuizResource($this->whenLoaded('quiz')),
             'guest_user' => new GuestUserResource($this->whenLoaded('guestUser')),
-            'option' => new OptionResource($this->whenLoaded('option')),
         ];
     }
 }

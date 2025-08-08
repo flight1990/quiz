@@ -25,4 +25,9 @@ class GuestUser extends Model
     {
         return $this->hasMany(Answer::class);
     }
+
+    public function quizUsers(): HasMany
+    {
+        return $this->hasMany(QuizUser::class);
+    }
 }
