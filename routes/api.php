@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\V1\Admin\AnswerController as AdminAnswerController;
 use App\Http\Controllers\V1\Admin\OptionController as AdminOptionController;
 use App\Http\Controllers\V1\Admin\QuestionController as AdminQuestionController;
 use App\Http\Controllers\V1\Admin\GuestUserController as AdminGuestUserController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\V1\Admin\QuizController as AdminQuizController;
 use App\Http\Controllers\V1\Admin\UnitController as AdminUnitController;
 use App\Http\Controllers\V1\Admin\UserController as AdminUserController;
 use App\Http\Controllers\V1\Guest\UnitController as GuestUnitController;
+use App\Http\Controllers\V1\Guest\AnswerController as GuestAnswerController;
 use App\Http\Controllers\V1\Guest\GuestUserController as GuestGuestUserController;
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Http\Request;
@@ -62,6 +64,11 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [AdminOptionController::class, 'deleteOption']);
         });
 
+        Route::prefix('answers')->group(function () {
+            Route::get('/', [AdminAnswerController::class, 'getAnswers']);
+            Route::delete('/{id}', [AdminAnswerController::class, 'deleteAnswer']);
+        });
+
         Route::prefix('guest-users')->group(function () {
             Route::get('/', [AdminGuestUserController::class, 'getGuestUsers']);
             Route::get('/{id}', [AdminGuestUserController::class, 'findGuestUserById']);
@@ -73,6 +80,11 @@ Route::prefix('v1')->group(function () {
     Route::prefix('guest-users')->group(function () {
         Route::post('/', [GuestGuestUserController::class, 'createGuestUser']);
         Route::get('/{uuid}', [GuestGuestUserController::class, 'findGuestUserByUuid']);
+    });
+
+    Route::prefix('answers')->group(function () {
+        Route::post('/', [GuestAnswerController::class, 'createAnswer']);
+        Route::post('/bulk', [GuestAnswerController::class, 'createBulkAnswers']);
     });
 
     Route::prefix('units')->group(function () {
