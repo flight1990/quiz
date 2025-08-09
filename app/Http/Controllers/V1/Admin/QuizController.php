@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
+use App\Actions\Quizzes\V1\GetQuizzesAction;
 use App\Actions\Quizzes\V1\CreateQuizAction;
 use App\Actions\Quizzes\V1\DeleteQuizAction;
 use App\Actions\Quizzes\V1\FindQuizByIdAction;
-use App\Actions\Quizzes\V1\GetQuizzesAction;
 use App\Actions\Quizzes\V1\UpdateQuizAction;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\V1\Quizzes\CreateQuizRequest;
