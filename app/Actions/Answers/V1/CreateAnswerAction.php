@@ -4,12 +4,16 @@ namespace App\Actions\Answers\V1;
 
 use App\Actions\Action;
 use App\Models\Answer;
-use App\Tasks\Answers\V1\CreateAnswerTask;
+use App\SubActions\V1\Answers\CreateAnswerSubAction;
+use Prettus\Validator\Exceptions\ValidatorException;
 
 class CreateAnswerAction extends Action
 {
+    /**
+     * @throws ValidatorException
+     */
     public function run(array $payload): Answer
     {
-        return app(CreateAnswerTask::class)->run($payload);
+        return app(CreateAnswerSubAction::class)->run($payload);
     }
 }

@@ -21,8 +21,9 @@ class CreateAnswerRequest extends FormRequest
         return [
             'question_id' => ['required', 'integer', 'exists:questions,id'],
             'guest_user_id' => ['required', 'integer', 'exists:guest_users,id'],
-            'option_id' => ['required', 'integer', 'exists:options,id'],
-            'other' => ['sometimes', 'nullable', 'string', 'max:6000'],
+            'options'   => ['required_without:other', 'array'],
+            'options.*' => ['integer', 'exists:options,id'],
+            'other' => ['required_without:options', 'nullable', 'string', 'max:6000'],
         ];
     }
 }
