@@ -3,6 +3,7 @@
 namespace App\Actions\Quizzes\V1;
 
 use App\Actions\Action;
+use App\Data\Criterias\WhereFieldCriteria;
 use App\Tasks\Quizzes\V1\GetQuizzesTask;
 use Illuminate\Support\Collection;
 
@@ -10,6 +11,12 @@ class GetQuizzesAction extends Action
 {
     public function run(?array $params): Collection
     {
-        return app(GetQuizzesTask::class)->run();
+        $task = app(GetQuizzesTask::class);
+
+        if (isset($params['is_active'])) {
+            $task->pushCriteria(new WhereFieldCriteria('is_active', $params['is_active']));
+        }
+
+        return $task->run();
     }
 }
