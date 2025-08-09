@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Answer extends Model
 {
     protected $fillable = [
         'question_id',
         'guest_user_id',
-        'option_id',
         'other',
     ];
 
@@ -24,8 +24,8 @@ class Answer extends Model
         return $this->belongsTo(Question::class);
     }
 
-    public function option(): BelongsTo
+    public function options(): BelongsToMany
     {
-        return $this->belongsTo(Option::class);
+        return $this->belongsToMany(Option::class);
     }
 }

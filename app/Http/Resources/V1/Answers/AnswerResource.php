@@ -22,13 +22,12 @@ class AnswerResource extends JsonResource
             'id' => $this->whenHas('id'),
             'question_id' => $this->whenHas('question_id'),
             'guest_user_id' => $this->whenHas('guest_user_id'),
-            'option_id' => $this->whenHas('option_id'),
             'other' => $this->whenHas('other'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
             'question' => new QuestionResource($this->whenLoaded('question')),
             'guest_user' => new GuestUserResource($this->whenLoaded('guestUser')),
-            'option' => new OptionResource($this->whenLoaded('option')),
+            'options' => OptionResource::collection($this->whenLoaded('options')),
         ];
     }
 }

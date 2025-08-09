@@ -3,7 +3,7 @@
 namespace App\Actions\Answers\V1;
 
 use App\Actions\Action;
-use App\Tasks\Answers\V1\CreateAnswerTask;
+use App\SubActions\V1\Answers\CreateAnswerSubAction;
 use Illuminate\Support\Facades\DB;
 
 class CreateBulkAnswersAction extends Action
@@ -12,7 +12,7 @@ class CreateBulkAnswersAction extends Action
     {
         DB::transaction(function () use ($payload) {
             foreach ($payload as $data) {
-                app(CreateAnswerTask::class)->run($data);
+                app(CreateAnswerSubAction::class)->run($data);
             }
         });
     }
