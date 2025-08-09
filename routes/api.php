@@ -8,6 +8,7 @@ use App\Http\Controllers\V1\Admin\GuestUserController as AdminGuestUserControlle
 use App\Http\Controllers\V1\Admin\QuizController as AdminQuizController;
 use App\Http\Controllers\V1\Admin\UnitController as AdminUnitController;
 use App\Http\Controllers\V1\Admin\UserController as AdminUserController;
+use App\Http\Controllers\V1\Guest\QuizController as GuestQuizController;
 use App\Http\Controllers\V1\Guest\QuizUserController as GuestQuizUserController;
 use App\Http\Controllers\V1\Guest\UnitController as GuestUnitController;
 use App\Http\Controllers\V1\Guest\AnswerController as GuestAnswerController;
@@ -82,6 +83,10 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [AdminQuizUserController::class, 'getQuizUsers']);
             Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser']);
         });
+    });
+
+    Route::prefix('quizzes')->group(function () {
+        Route::get('/', [GuestQuizController::class, 'getQuizzes']);
     });
 
     Route::prefix('guest-users')->group(function () {
