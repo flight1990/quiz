@@ -3,7 +3,6 @@
 namespace App\Tasks\GuestUsers\V1;
 
 use App\Data\Repositories\GuestUserRepository;
-use App\Models\GuestUser;
 use App\Tasks\Task;
 use Prettus\Validator\Exceptions\ValidatorException;
 
@@ -15,8 +14,14 @@ class CreateGuestUserTask extends Task
     /**
      * @throws ValidatorException
      */
-    public function run(array $payload): GuestUser
+    public function run(array $payload): array
     {
-        return $this->repository->create($payload);
+        $guestUser = $this->repository->create($payload);
+        $accessToken = $guestUser->createToken('guest-token')->accessToken;
+
+        return [
+            'guestUser' => $guestUser,
+            'accessToken' => $accessToken
+        ];
     }
 }

@@ -21,7 +21,6 @@ class UnitResource extends JsonResource
             'name' => $this->whenHas('name'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
-            'users' => UserResource::collection($this->whenLoaded('users')),
             'guest_users' => GuestUserResource::collection($this->whenLoaded('guestUsers')),
         ];
     }

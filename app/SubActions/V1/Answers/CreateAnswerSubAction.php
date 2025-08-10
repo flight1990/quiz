@@ -13,6 +13,7 @@ class CreateAnswerSubAction
      */
     public function run(array $payload): Answer
     {
+        $payload['guest_user_id'] = auth()->id();
         $answer = app(CreateAnswerTask::class)->run($payload);
 
         if (!empty($payload['options'])) {
