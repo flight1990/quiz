@@ -10,6 +10,12 @@ class CreateUserAction extends Action
 {
     public function run(array $payload): User
     {
-        return app(CreateUserTask::class)->run($payload);
+        $user = app(CreateUserTask::class)->run($payload);
+
+        if (isset($payload['roles'])) {
+            $user->syncRoles($payload['roles']);
+        }
+
+        return $user;
     }
 }

@@ -18,6 +18,8 @@ class CreateUserRequest extends FormRequest
             'email' => ['required', 'email', 'max:200', 'unique:users,email'],
             'password' => ['required', 'min:6', 'max:50', 'confirmed'],
             'unit_id' => ['nullable', 'int', 'exists:units'],
+            'roles' => ['sometimes', 'array'],
+            'roles.*' => ['sometimes', 'integer', 'exists:roles,id'],
         ];
     }
 }

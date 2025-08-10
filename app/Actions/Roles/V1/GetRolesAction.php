@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Actions\Users\V1;
+namespace App\Actions\Roles\V1;
 
 use App\Actions\Action;
 use App\Data\Criterias\WhereFieldCriteria;
-use App\Tasks\Users\V1\GetUsersTask;
+use App\Tasks\Roles\V1\GetRolesTask;
 use Illuminate\Support\Collection;
 
-class GetUsersAction extends Action
+class GetRolesAction extends Action
 {
     public function run(?array $params): Collection
     {
-        return app(GetUsersTask::class)
+        return app(GetRolesTask::class)
             ->pushCriteria(new WhereFieldCriteria('name', 'admin', '!='))
             ->run();
     }

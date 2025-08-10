@@ -3,6 +3,7 @@
 namespace App\Actions\Users\V1;
 
 use App\Actions\Action;
+use App\Data\Criterias\WhereFieldCriteria;
 use App\Models\User;
 use App\Tasks\Users\V1\FindUserByIdTask;
 

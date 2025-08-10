@@ -8,7 +8,9 @@ use App\Http\Controllers\V1\Admin\{
     GuestUserController as AdminGuestUserController,
     QuizController as AdminQuizController,
     UnitController as AdminUnitController,
-    UserController as AdminUserController
+    UserController as AdminUserController,
+    RoleController as AdminRoleController,
+    PermissionController as AdminPermissionController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
@@ -18,7 +20,6 @@ use App\Http\Controllers\V1\Guest\{
     GuestUserController as GuestGuestUserController
 };
 use App\Http\Controllers\V1\TokenController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::middleware('auth:api')->group(function () {
     Route::delete('token/revoke', [TokenController::class, 'tokenRevoke']);
-    Route::get('/me', fn (Request $request) => $request->user());
+    Route::get('/me', [TokenController::class, 'getMe']);
 });
 
 Route::prefix('v1')->group(function () {
@@ -39,70 +40,73 @@ Route::prefix('v1')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('admin')->middleware('auth:api')->group(function () {
-
-        // Users
         Route::prefix('users')->group(function () {
-            Route::get('/', [AdminUserController::class, 'getUsers']);
-            Route::post('/', [AdminUserController::class, 'createUser']);
-            Route::get('/{id}', [AdminUserController::class, 'findUserById']);
-            Route::patch('/{id}', [AdminUserController::class, 'updateUser']);
-            Route::delete('/{id}', [AdminUserController::class, 'deleteUser']);
+            Route::get('/', [AdminUserController::class, 'getUsers'])->middleware('permission:user.view');
+            Route::post('/', [AdminUserController::class, 'createUser'])->middleware('permission:user.create');
+            Route::get('/{id}', [AdminUserController::class, 'findUserById'])->middleware('permission:user.view');
+            Route::patch('/{id}', [AdminUserController::class, 'updateUser'])->middleware('permission:user.edit');
+            Route::delete('/{id}', [AdminUserController::class, 'deleteUser'])->middleware('permission:user.delete');
         });
 
-        // Units
+        Route::prefix('roles')->group(function () {
+            Route::get('/', [AdminRoleController::class, 'getRoles'])->middleware('permission:role.view');
+            Route::post('/', [AdminRoleController::class, 'createRole'])->middleware('permission:role.create');
+            Route::get('/{id}', [AdminRoleController::class, 'findRoleById'])->middleware('permission:role.view');
+            Route::patch('/{id}', [AdminRoleController::class, 'updateRole'])->middleware('permission:role.edit');
+            Route::delete('/{id}', [AdminRoleController::class, 'deleteRole'])->middleware('permission:role.delete');
+        });
+
+        Route::prefix('permissions')->group(function () {
+            Route::get('/', [AdminPermissionController::class, 'getPermissions'])->middleware('permission:role.view');
+        });
+
         Route::prefix('units')->group(function () {
-            Route::get('/', [AdminUnitController::class, 'getUnits']);
-            Route::post('/', [AdminUnitController::class, 'createUnit']);
-            Route::get('/{id}', [AdminUnitController::class, 'findUnitById']);
-            Route::patch('/{id}', [AdminUnitController::class, 'updateUnit']);
-            Route::delete('/{id}', [AdminUnitController::class, 'deleteUnit']);
+            Route::get('/', [AdminUnitController::class, 'getUnits'])->middleware('permission:unit.view');;
+            Route::post('/', [AdminUnitController::class, 'createUnit'])->middleware('permission:unit.create');
+            Route::get('/{id}', [AdminUnitController::class, 'findUnitById'])->middleware('permission:unit.view');
+            Route::patch('/{id}', [AdminUnitController::class, 'updateUnit'])->middleware('permission:unit.edit');
+            Route::delete('/{id}', [AdminUnitController::class, 'deleteUnit'])->middleware('permission:unit.delete');
         });
 
-        // Quizzes
         Route::prefix('quizzes')->group(function () {
-            Route::get('/', [AdminQuizController::class, 'getQuizzes']);
-            Route::post('/', [AdminQuizController::class, 'createQuiz']);
-            Route::get('/{id}', [AdminQuizController::class, 'findQuizById']);
-            Route::patch('/{id}', [AdminQuizController::class, 'updateQuiz']);
-            Route::delete('/{id}', [AdminQuizController::class, 'deleteQuiz']);
+            Route::get('/', [AdminQuizController::class, 'getQuizzes'])->middleware('permission:quiz.view');
+            Route::post('/', [AdminQuizController::class, 'createQuiz'])->middleware('permission:quiz.create');
+            Route::get('/{id}', [AdminQuizController::class, 'findQuizById'])->middleware('permission:quiz.view');
+            Route::patch('/{id}', [AdminQuizController::class, 'updateQuiz'])->middleware('permission:quiz.edit');
+            Route::delete('/{id}', [AdminQuizController::class, 'deleteQuiz'])->middleware('permission:quiz.delete');
         });
 
-        // Questions
         Route::prefix('questions')->group(function () {
-            Route::get('/', [AdminQuestionController::class, 'getQuestions']);
-            Route::post('/', [AdminQuestionController::class, 'createQuestion']);
-            Route::get('/{id}', [AdminQuestionController::class, 'findQuestionById']);
-            Route::patch('/{id}', [AdminQuestionController::class, 'updateQuestion']);
-            Route::delete('/{id}', [AdminQuestionController::class, 'deleteQuestion']);
+            Route::get('/', [AdminQuestionController::class, 'getQuestions'])->middleware('permission:question.view');
+            Route::post('/', [AdminQuestionController::class, 'createQuestion'])->middleware('permission:question.create');
+            Route::get('/{id}', [AdminQuestionController::class, 'findQuestionById'])->middleware('permission:question.view');
+            Route::patch('/{id}', [AdminQuestionController::class, 'updateQuestion'])->middleware('permission:question.edit');
+            Route::delete('/{id}', [AdminQuestionController::class, 'deleteQuestion'])->middleware('permission:question.delete');
         });
 
-        // Options
         Route::prefix('options')->group(function () {
-            Route::get('/', [AdminOptionController::class, 'getOptions']);
-            Route::post('/', [AdminOptionController::class, 'createOption']);
-            Route::get('/{id}', [AdminOptionController::class, 'findOptionById']);
-            Route::patch('/{id}', [AdminOptionController::class, 'updateOption']);
-            Route::delete('/{id}', [AdminOptionController::class, 'deleteOption']);
+            Route::get('/', [AdminOptionController::class, 'getOptions'])->middleware('permission:option.view');
+            Route::post('/', [AdminOptionController::class, 'createOption'])->middleware('permission:option.create');
+            Route::get('/{id}', [AdminOptionController::class, 'findOptionById'])->middleware('permission:option.view');
+            Route::patch('/{id}', [AdminOptionController::class, 'updateOption'])->middleware('permission:option.edit');
+            Route::delete('/{id}', [AdminOptionController::class, 'deleteOption'])->middleware('permission:option.delete');
         });
 
-        // Answers
         Route::prefix('answers')->group(function () {
-            Route::get('/', [AdminAnswerController::class, 'getAnswers']);
-            Route::delete('/{id}', [AdminAnswerController::class, 'deleteAnswer']);
+            Route::get('/', [AdminAnswerController::class, 'getAnswers'])->middleware('permission:answer.view');
+            Route::delete('/{id}', [AdminAnswerController::class, 'deleteAnswer'])->middleware('permission:answer.delete');
         });
 
-        // Guest Users
         Route::prefix('guest-users')->group(function () {
-            Route::get('/', [AdminGuestUserController::class, 'getGuestUsers']);
-            Route::get('/{id}', [AdminGuestUserController::class, 'findGuestUserById']);
-            Route::patch('/{id}', [AdminGuestUserController::class, 'updateGuestUser']);
-            Route::delete('/{id}', [AdminGuestUserController::class, 'deleteGuestUser']);
+            Route::get('/', [AdminGuestUserController::class, 'getGuestUsers'])->middleware('permission:guest-user.view');
+            Route::get('/{id}', [AdminGuestUserController::class, 'findGuestUserById'])->middleware('permission:guest-user.view');
+            Route::patch('/{id}', [AdminGuestUserController::class, 'updateGuestUser'])->middleware('permission:guest-user.view');
+            Route::delete('/{id}', [AdminGuestUserController::class, 'deleteGuestUser'])->middleware('permission:guest-user.delete');
         });
 
-        // Quiz Users
         Route::prefix('quiz-users')->group(function () {
-            Route::get('/', [AdminQuizUserController::class, 'getQuizUsers']);
-            Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser']);
+            Route::get('/', [AdminQuizUserController::class, 'getQuizUsers'])->middleware('permission:quiz-user.view');
+            Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser'])->middleware('permission:quiz-user.delete');
         });
     });
 
@@ -126,25 +130,20 @@ Route::prefix('v1')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::middleware('auth:guest-api')->group(function () {
-
-        // Guest Users
         Route::prefix('guest-users')->group(function () {
             Route::get('/me', [GuestGuestUserController::class, 'getMe']);
             Route::delete('/token/revoke', [GuestGuestUserController::class, 'tokenRevoke']);
         });
 
-        // Quizzes
         Route::prefix('quizzes')->group(function () {
             Route::get('/', [GuestQuizController::class, 'getQuizzes']);
         });
 
-        // Quiz Users
         Route::prefix('quiz-users')->group(function () {
             Route::get('/', [GuestQuizUserController::class, 'getQuizUsers']);
             Route::post('/', [GuestQuizUserController::class, 'createQuizUser']);
         });
 
-        // Answers
         Route::prefix('answers')->group(function () {
             Route::get('/', [GuestAnswerController::class, 'getAnswers']);
             Route::post('/', [GuestAnswerController::class, 'createAnswer']);
@@ -152,3 +151,5 @@ Route::prefix('v1')->group(function () {
         });
     });
 });
+
+//->middleware('permission:auth.roles.read');

@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Actions\Users\V1;
+namespace App\Actions\Roles\V1;
 
 use App\Actions\Action;
 use App\Data\Criterias\WhereFieldCriteria;
-use App\Tasks\Users\V1\DeleteUserTask;
+use App\Tasks\Roles\V1\DeleteRoleTask;
 
-class DeleteUserAction extends Action
+class DeleteRoleAction extends Action
 {
     public function run(int $id): int
     {
-        return app(DeleteUserTask::class)
+        return app(DeleteRoleTask::class)
             ->pushCriteria(new WhereFieldCriteria('name', 'admin', '!='))
             ->run($id);
     }
