@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Data\Repositories;
+use App\Data\Criterias\SafeRequestCriteria;
 use App\Models\Unit;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
@@ -12,12 +13,17 @@ class UnitRepository extends BaseRepository
         'name' => 'like',
     ];
 
+    protected array $allowedSort = ['id','name'];
+    protected array $allowedWith  = [
+        'guestUsers',
+    ];
+
     /**
      * @throws RepositoryException
      */
     public function boot(): void
     {
-        $this->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $this->pushCriteria(app(SafeRequestCriteria::class));
     }
 
     public function model(): string
