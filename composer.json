@@ -13,7 +13,8 @@
         "laravel/framework": "^12.0",
         "laravel/passport": "^13.0",
         "laravel/tinker": "^2.10.1",
-        "prettus/l5-repository": "^2.10"
+        "prettus/l5-repository": "^2.10",
+        "spatie/laravel-permission": "^6.21"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

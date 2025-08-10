@@ -8,10 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\Contracts\OAuthenticatable;
 use Laravel\Passport\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements OAuthenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    protected string $guard_name = 'api';
 
     protected $fillable = [
         'name',
@@ -24,6 +27,11 @@ class User extends Authenticatable implements OAuthenticatable
         'password',
         'remember_token',
     ];
+
+    protected function getDefaultGuardName(): string
+    {
+        return $this->guard_name;
+    }
 
     protected function casts(): array
     {
