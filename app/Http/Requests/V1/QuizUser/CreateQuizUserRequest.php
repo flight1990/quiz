@@ -15,7 +15,6 @@ class CreateQuizUserRequest extends FormRequest
     {
         return [
             'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
-            'guest_user_id' => ['required', 'integer', 'exists:guest_users,id'],
         ];
     }
 }

@@ -17,6 +17,10 @@ class GetQuizzesAction extends Action
             $task->pushCriteria(new WhereFieldCriteria('is_active', $params['is_active']));
         }
 
+        if (!empty($params['is_anonymous'])) {
+            $task->pushCriteria(new WhereFieldCriteria('is_anonymous', $params['is_anonymous']));
+        }
+
         return $task->run();
     }
 }

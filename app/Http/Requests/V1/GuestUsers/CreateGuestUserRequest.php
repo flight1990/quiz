@@ -14,10 +14,8 @@ class CreateGuestUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['nullable', 'string', 'max:200'],
-            'ip_address' => ['nullable', 'string', 'max:200'],
-            'user_agent' => ['nullable', 'string', 'max:200'],
-            'unit_id' => ['nullable', 'int', 'exists:units'],
+            'name' => ['required', 'string', 'max:200'],
+            'unit_id' => ['required', 'int', 'exists:units,id'],
         ];
     }
 }

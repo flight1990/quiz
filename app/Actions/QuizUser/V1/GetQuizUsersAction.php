@@ -3,6 +3,7 @@
 namespace App\Actions\QuizUser\V1;
 
 use App\Actions\Action;
+use App\Data\Criterias\WhereFieldCriteria;
 use App\Tasks\QuizUser\V1\GetQuizUsersTask;
 use Illuminate\Support\Collection;
 
@@ -10,6 +11,12 @@ class GetQuizUsersAction extends Action
 {
     public function run(?array $params): Collection
     {
-        return app(GetQuizUsersTask::class)->run();
+        $task = app(GetQuizUsersTask::class);
+
+        if (isset($params['guest_user_id'])) {
+            $task->pushCriteria(new WhereFieldCriteria('guest_user_id', $params['guest_user_id']));
+        }
+
+        return $task->run();
     }
 }
