@@ -12,7 +12,7 @@ class GetUsersAction extends Action
     public function run(?array $params): Collection
     {
         return app(GetUsersTask::class)
-            ->pushCriteria(new WhereFieldCriteria('name', 'admin', '!='))
+//            ->pushCriteria(new WhereFieldCriteria('name', 'admin', '!='))
             ->run();
     }
 }

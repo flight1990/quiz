@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Data\Repositories;
+use App\Data\Criterias\SafeRequestCriteria;
 use App\Models\Question;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
@@ -11,12 +12,18 @@ class QuestionRepository extends BaseRepository
         'id' => '=',
     ];
 
+    protected array $allowedSort = ['id', 'order'];
+    protected array $allowedWith = [
+        'options',
+        'quiz',
+    ];
+
     /**
      * @throws RepositoryException
      */
     public function boot(): void
     {
-        $this->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
+        $this->pushCriteria(app(SafeRequestCriteria::class));
     }
 
     public function model(): string
