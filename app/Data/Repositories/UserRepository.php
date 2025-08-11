@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Data\Repositories;
+
 use App\Data\Criterias\SafeRequestCriteria;
 use App\Models\User;
 use Prettus\Repository\Eloquent\BaseRepository;
@@ -14,10 +15,13 @@ class UserRepository extends BaseRepository
         'email' => 'like'
     ];
 
-    protected array $allowedSort = ['id','name','email'];
-    protected array $allowedWith  = [
+    protected array $allowedSort = ['id', 'name', 'email'];
+    protected array $allowedWith = [
         'unit',
-        'roles' => ['permissions']
+        'roles' => ['permissions'],
+        'quizzes' => [
+            'questions' => ['options']
+        ]
     ];
 
     /**

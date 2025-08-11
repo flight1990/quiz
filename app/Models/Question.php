@@ -10,6 +10,7 @@ class Question extends Model
 {
     protected $fillable = [
         'text',
+        'description',
         'order',
         'quiz_id',
         'answer_type',

@@ -19,6 +19,7 @@ class QuestionResource extends JsonResource
         return [
             'id' => $this->whenHas('id'),
             'text' => $this->whenHas('text'),
+            'description' => $this->whenHas('description'),
             'order' => $this->whenHas('order'),
             'answer_type' => $this->whenHas('answer_type'),
             'answer_timer' => $this->whenHas('answer_timer'),

@@ -33,6 +33,7 @@ class UpdateQuestionRequest extends FormRequest
 
         return Arr::except(array_merge([
             'text' => ['sometimes', 'string', 'max:6000'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:6000'],
             'order' => ['sometimes', 'nullable', 'integer'],
             'is_multiple' => ['sometimes', 'nullable', 'boolean'],
             'answer_timer' => ['sometimes', 'nullable', 'integer'],
