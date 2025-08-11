@@ -18,43 +18,19 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $permissions = [
-            'quiz.create',
-            'quiz.edit',
-            'quiz.delete',
-            'quiz.view',
-            'quiz.view_all',
-            'role.create',
-            'role.edit',
-            'role.delete',
-            'role.view',
-            'user.create',
-            'user.edit',
-            'user.delete',
-            'user.view',
-            'question.create',
-            'question.edit',
-            'question.delete',
-            'question.view',
-            'option.create',
-            'option.edit',
-            'option.delete',
-            'option.view',
-            'answer.create',
-            'answer.edit',
-            'answer.delete',
-            'answer.view',
-            'guest-user.view',
-            'guest-user.delete',
-            'quiz-user.view',
-            'quiz-user.delete',
-            'unit.create',
-            'unit.edit',
-            'unit.delete',
-            'unit.view',
+            'quiz.create', 'quiz.edit', 'quiz.delete', 'quiz.view', 'quiz.view_all',
+            'role.create', 'role.edit', 'role.delete', 'role.view',
+            'user.create', 'user.edit', 'user.delete', 'user.view',
+            'question.create', 'question.edit', 'question.delete', 'question.view',
+            'option.create', 'option.edit', 'option.delete', 'option.view',
+            'answer.create', 'answer.edit', 'answer.delete', 'answer.view',
+            'guest-user.view', 'guest-user.delete',
+            'quiz-user.view', 'quiz-user.delete',
+            'unit.create', 'unit.edit', 'unit.delete', 'unit.view',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::create([
+            Permission::firstOrCreate([
                 'name' => $permission,
                 'guard_name' => 'api'
             ]);
@@ -62,15 +38,25 @@ class RolesAndPermissionsSeeder extends Seeder
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $role = Role::create([
+        $role = Role::firstOrCreate([
             'name' => 'admin',
             'guard_name' => 'api'
         ]);
 
         $role->givePermissionTo(Permission::all());
 
-        $admin = User::query()->where('name', 'admin')->first();
-        $admin->assignRole('admin');
+        $admin = User::firstOrCreate(
+            ['name' => 'admin'],
+            [
+                'email' => 'admin@example.com',
+                'password' => bcrypt('password') // можно заменить на свой
+            ]
+        );
 
+        if (!$admin->hasRole('admin')) {
+            $admin->assignRole('admin');
+        }
+
+        app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
     }
 }
