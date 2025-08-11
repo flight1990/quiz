@@ -10,6 +10,7 @@ class CreateQuizAction extends Action
 {
     public function run(array $payload): Quiz
     {
+        $payload['user_id'] = auth('api')->id();
         return app(CreateQuizSubAction::class)->run($payload);
     }
 }

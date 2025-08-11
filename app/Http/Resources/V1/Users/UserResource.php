@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Users;
 
+use App\Http\Resources\V1\Quizzes\QuizResource;
 use App\Http\Resources\V1\Roles\RoleResource;
 use App\Http\Resources\V1\Units\UnitResource;
 use Illuminate\Http\Request;
@@ -26,6 +27,7 @@ class UserResource extends JsonResource
             'updated_at' => $this->whenHas('updated_at'),
             'unit' => new UnitResource($this->whenLoaded('unit')),
             'roles' => RoleResource::collection($this->whenLoaded('roles')),
+            'quizzes' => QuizResource::collection($this->whenLoaded('quizzes')),
         ];
     }
 }

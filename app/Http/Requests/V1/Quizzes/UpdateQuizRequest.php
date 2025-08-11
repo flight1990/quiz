@@ -30,6 +30,7 @@ class UpdateQuizRequest extends FormRequest
             'title' => ['sometimes', 'string', 'max:200'],
             'is_anonymous' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
+            'description' => ['sometimes', 'nullable', 'string', 'max:6000'],
         ], $questionsRules);
     }
 }

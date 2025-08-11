@@ -28,6 +28,7 @@ class CreateQuizRequest extends FormRequest
             'title' => ['required', 'string', 'max:200'],
             'is_anonymous' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
+            'description' => ['nullable', 'string', 'max:6000'],
         ], $questionsRules);
     }
 }
