@@ -23,6 +23,7 @@ class QuestionResource extends JsonResource
             'order' => $this->whenHas('order'),
             'answer_type' => $this->whenHas('answer_type'),
             'answer_timer' => $this->whenHas('answer_timer'),
+            'is_multiple' => $this->whenHas('is_multiple'),
             'quiz_id' => $this->whenHas('quiz_id'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
