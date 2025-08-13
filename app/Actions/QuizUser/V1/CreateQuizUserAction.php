@@ -16,7 +16,7 @@ class CreateQuizUserAction extends Action
     public function run(array $payload): QuizUser
     {
         $payload['completed_at'] = Carbon::now();
-        $payload['guest_user_id'] = auth()->id();
+        $payload['guest_user_id'] = auth('guest-api')->id();
 
         return app(CreateQuizUserTask::class)->run($payload);
     }
