@@ -15,6 +15,8 @@ class CreateUnitRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:200', 'unique:units,name'],
+            'quizzes' => ['sometimes', 'array'],
+            'quizzes.*' => ['integer', 'exists:quizzes,id'],
         ];
     }
 }

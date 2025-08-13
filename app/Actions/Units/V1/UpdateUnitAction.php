@@ -10,6 +10,12 @@ class UpdateUnitAction extends Action
 {
     public function run(array $payload, int $id): Unit
     {
-        return app(UpdateUnitTask::class)->run($payload, $id);
+        $unit = app(UpdateUnitTask::class)->run($payload, $id);
+
+        if (isset($payload['quizzes'])) {
+            $unit->quizzes()->sync($payload['quizzes']);
+        }
+
+        return $unit;
     }
 }

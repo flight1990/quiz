@@ -23,6 +23,7 @@ class AnswerResource extends JsonResource
             'question_id' => $this->whenHas('question_id'),
             'guest_user_id' => $this->whenHas('guest_user_id'),
             'other' => $this->whenHas('other'),
+            'is_correct' => $this->whenHas('is_correct'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
             'question' => new QuestionResource($this->whenLoaded('question')),

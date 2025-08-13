@@ -15,6 +15,8 @@ class UpdateUnitRequest extends FormRequest
     {
         return [
             'name' => ['sometimes', 'string', 'max:200', 'unique:units,name,'.$this['id']],
+            'quizzes' => ['sometimes', 'array'],
+            'quizzes.*' => ['integer', 'exists:quizzes,id'],
         ];
     }
 }
