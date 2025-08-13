@@ -16,7 +16,7 @@ class NotAnsweredYet implements ValidationRule
 
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (Answer::where('guest_user_id', $this->userId)
+        if (Answer::query()->where('guest_user_id', $this->userId)
             ->where('question_id', $value)
             ->exists()
         ) {
