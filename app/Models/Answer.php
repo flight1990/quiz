@@ -13,6 +13,7 @@ class Answer extends Model
         'guest_user_id',
         'other',
         'is_correct',
+        'attempt_id',
     ];
 
     protected $casts = [
@@ -32,5 +33,10 @@ class Answer extends Model
     public function options(): BelongsToMany
     {
         return $this->belongsToMany(Option::class);
+    }
+
+    public function quizAttempt(): BelongsTo
+    {
+        return $this->belongsTo(QuizAttempt::class);
     }
 }
