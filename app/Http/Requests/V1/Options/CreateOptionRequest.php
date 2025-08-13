@@ -22,8 +22,7 @@ class CreateOptionRequest extends FormRequest
         return Arr::except([
             'text' => ['required', 'string', 'max:6000'],
             'question_id' => ['required', 'integer', 'exists:questions,id'],
-            'is_correct' => ['nullable', 'boolean'],
-            'is_other' => ['nullable', 'boolean'],
+            'is_correct' => ['required', 'boolean'],
         ], $except);
     }
 }

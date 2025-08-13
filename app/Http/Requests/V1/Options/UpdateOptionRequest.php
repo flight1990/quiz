@@ -23,7 +23,6 @@ class UpdateOptionRequest extends FormRequest
             'text' => ['sometimes', 'string', 'max:6000'],
             'question_id' => ['sometimes', 'integer', 'exists:questions,id'],
             'is_correct' => ['sometimes', 'nullable', 'boolean'],
-            'is_other' => ['sometimes', 'nullable', 'boolean'],
         ], $except);
     }
 }

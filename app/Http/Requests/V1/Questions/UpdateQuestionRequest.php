@@ -3,6 +3,7 @@
 namespace App\Http\Requests\V1\Questions;
 
 use App\Http\Requests\V1\Options\UpdateOptionRequest;
+use App\Rules\HasCorrectOption;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 
@@ -15,13 +16,14 @@ class UpdateQuestionRequest extends FormRequest
 
     public function rules(): array
     {
-        return self::getRules();
+        $questionId = $this->route('id');
+        return self::getRules([], $questionId);
     }
 
-    public static function getRules(array $except = []): array
+    public static function getRules(array $except = [], ?int $questionId = null): array
     {
         $optionsRules = [
-            'options' => ['sometimes', 'array'],
+            'options' => ['sometimes', 'array', new HasCorrectOption($questionId)],
             'options.*.id' => ['sometimes', 'integer', 'exists:options,id'],
         ];
 

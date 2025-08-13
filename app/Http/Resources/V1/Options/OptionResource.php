@@ -20,7 +20,6 @@ class OptionResource extends JsonResource
             'text' => $this->whenHas('text'),
             'question_id' => $this->whenHas('question_id'),
             'is_correct' => $this->whenHas('is_correct'),
-            'is_other' => $this->whenHas('is_other'),
             'created_at' => $this->whenHas('created_at'),
             'updated_at' => $this->whenHas('updated_at'),
             'question' => new QuestionResource($this->whenLoaded('question')),
