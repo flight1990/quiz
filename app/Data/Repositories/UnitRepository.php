@@ -16,6 +16,7 @@ class UnitRepository extends BaseRepository
     protected array $allowedSort = ['id','name'];
     protected array $allowedWith  = [
         'guestUsers',
+        'quizzes' => ['questions' => 'options']
     ];
 
     /**

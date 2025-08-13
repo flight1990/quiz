@@ -12,6 +12,11 @@ class Answer extends Model
         'question_id',
         'guest_user_id',
         'other',
+        'is_correct',
+    ];
+
+    protected $casts = [
+        'is_correct' => 'boolean'
     ];
 
     public function guestUser(): BelongsTo
