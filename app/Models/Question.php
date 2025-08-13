@@ -15,6 +15,11 @@ class Question extends Model
         'quiz_id',
         'answer_type',
         'answer_timer',
+        'is_multiple',
+    ];
+
+    protected $casts = [
+        'is_multiple' => 'boolean'
     ];
 
     public function quiz(): BelongsTo

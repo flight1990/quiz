@@ -37,7 +37,6 @@ class UpdateQuestionRequest extends FormRequest
             'text' => ['sometimes', 'string', 'max:6000'],
             'description' => ['sometimes', 'nullable', 'string', 'max:6000'],
             'order' => ['sometimes', 'nullable', 'integer'],
-            'is_multiple' => ['sometimes', 'nullable', 'boolean'],
             'answer_timer' => ['sometimes', 'nullable', 'integer'],
             'quiz_id' => ['sometimes', 'integer', 'exists:quizzes,id'],
         ], $optionsRules), $except);

@@ -36,7 +36,6 @@ class CreateQuestionRequest extends FormRequest
             'text' => ['required', 'string', 'max:6000'],
             'description' => ['nullable', 'string', 'max:6000'],
             'order' => ['nullable', 'integer'],
-            'is_multiple' => ['nullable', 'boolean'],
             'answer_timer' => ['nullable', 'integer'],
             'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
         ], $optionsRules), $except);

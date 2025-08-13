@@ -13,6 +13,7 @@ class SyncQuestionOptionsSubAction
     {
         DB::transaction(function () use ($question, $options) {
             $existingIds = [];
+            $correctCount = 0;
 
             foreach ($options as $data) {
                 if (isset($data['id'])) {
@@ -21,10 +22,18 @@ class SyncQuestionOptionsSubAction
                     $option = app(CreateOptionTask::class)->run(array_merge(['question_id' => $question['id']], $data));
                 }
 
+                if (!empty($option['is_correct'])) {
+                    $correctCount++;
+                }
+
                 $existingIds[] = $option['id'];
             }
 
             $question->options()->whereNotIn('id', $existingIds)->delete();
+
+            $question->update([
+                'is_multiple' => $correctCount > 1
+            ]);
         });
     }
 }
