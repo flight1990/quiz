@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\V1\Quizzes;
 
-use App\Http\Requests\V1\Questions\CreateQuestionRequest;
 use App\Http\Requests\V1\Questions\UpdateQuestionRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -31,6 +30,8 @@ class UpdateQuizRequest extends FormRequest
             'is_anonymous' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
             'description' => ['sometimes', 'nullable', 'string', 'max:6000'],
+            'units' => ['sometimes', 'array'],
+            'units.*' => ['integer', 'exists:units,id'],
         ], $questionsRules);
     }
 }

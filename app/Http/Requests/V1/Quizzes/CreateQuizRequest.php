@@ -29,6 +29,8 @@ class CreateQuizRequest extends FormRequest
             'is_anonymous' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:6000'],
+            'units' => ['sometimes', 'array'],
+            'units.*' => ['integer', 'exists:units,id'],
         ], $questionsRules);
     }
 }

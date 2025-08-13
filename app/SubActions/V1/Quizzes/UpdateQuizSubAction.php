@@ -15,6 +15,10 @@ class UpdateQuizSubAction
             app(SyncQuizQuestionsSubAction::class)->run($quiz, $payload['questions']);
         }
 
+        if (isset($payload['units'])) {
+            $quiz->units()->sync($payload['units']);
+        }
+
         return $quiz;
     }
 }
