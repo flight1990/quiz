@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\V1\Admin;
 
+use App\Actions\Options\V1\CreateOptionAction;
 use App\Actions\Options\V1\DeleteOptionAction;
 use App\Actions\Options\V1\FindOptionByIdAction;
 use App\Actions\Options\V1\GetOptionsAction;
@@ -31,7 +32,7 @@ class OptionController extends ApiController
 
     public function createOption(CreateOptionRequest $request): JsonResponse
     {
-        $data = app(CreateOptionRequest::class)->run($request->validated());
+        $data = app(CreateOptionAction::class)->run($request->validated());
         return $this->respondWithSuccessCreate(new OptionResource($data));
     }
 
