@@ -12,12 +12,10 @@ class Option extends Model
         'text',
         'question_id',
         'is_correct',
-        'is_other',
     ];
 
     protected $casts = [
         'is_correct' => 'boolean',
-        'is_other' => 'boolean',
     ];
 
     public function question(): BelongsTo
