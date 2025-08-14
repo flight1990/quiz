@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\V1\Admin\{
-    QuizUserController as AdminQuizUserController,
     AnswerController as AdminAnswerController,
     OptionController as AdminOptionController,
     QuestionController as AdminQuestionController,
@@ -11,13 +10,15 @@ use App\Http\Controllers\V1\Admin\{
     UserController as AdminUserController,
     RoleController as AdminRoleController,
     PermissionController as AdminPermissionController,
+    QuizAttemptController as AdminQuizAttemptController,
 };
 use App\Http\Controllers\V1\Guest\{
-    QuizController as GuestQuizController,
-    QuizUserController as GuestQuizUserController,
-    UnitController as GuestUnitController,
-    AnswerController as GuestAnswerController,
-    GuestUserController as GuestGuestUserController
+    QuizController,
+    UnitController,
+    AnswerController,
+    GuestUserController,
+    QuizAttemptController,
+
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;
@@ -104,9 +105,9 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [AdminGuestUserController::class, 'deleteGuestUser'])->middleware('permission:guest-user.delete');
         });
 
-        Route::prefix('quiz-users')->group(function () {
-            Route::get('/', [AdminQuizUserController::class, 'getQuizUsers'])->middleware('permission:quiz-user.view');
-            Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser'])->middleware('permission:quiz-user.delete');
+        Route::prefix('quiz-attempts')->group(function () {
+            Route::get('/', [AdminQuizAttemptController::class, 'getQuizAttempts']);
+            Route::delete('/{id}', [AdminQuizAttemptController::class, 'deleteQuizAttempt']);
         });
     });
 
@@ -116,12 +117,12 @@ Route::prefix('v1')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('guest-users')->group(function () {
-        Route::post('/token', [GuestGuestUserController::class, 'token']);
-        Route::post('/anonymous/token', [GuestGuestUserController::class, 'anonymousToken']);
+        Route::post('/token', [GuestUserController::class, 'token']);
+        Route::post('/anonymous/token', [GuestUserController::class, 'anonymousToken']);
     });
 
     Route::prefix('units')->group(function () {
-        Route::get('/', [GuestUnitController::class, 'getUnits']);
+        Route::get('/', [UnitController::class, 'getUnits']);
     });
 
     /*
@@ -131,25 +132,21 @@ Route::prefix('v1')->group(function () {
     */
     Route::middleware('auth:guest-api')->group(function () {
         Route::prefix('guest-users')->group(function () {
-            Route::get('/me', [GuestGuestUserController::class, 'getMe']);
-            Route::delete('/token/revoke', [GuestGuestUserController::class, 'tokenRevoke']);
+            Route::get('/me', [GuestUserController::class, 'getMe']);
+            Route::delete('/token/revoke', [GuestUserController::class, 'tokenRevoke']);
         });
 
         Route::prefix('quizzes')->group(function () {
-            Route::get('/', [GuestQuizController::class, 'getQuizzes']);
+            Route::get('/', [QuizController::class, 'getQuizzes']);
         });
 
-        Route::prefix('quiz-users')->group(function () {
-            Route::get('/', [GuestQuizUserController::class, 'getQuizUsers']);
-            Route::post('/', [GuestQuizUserController::class, 'createQuizUser']);
+        Route::prefix('quiz-attempts')->group(function () {
+            Route::get('/', [QuizAttemptController::class, 'getQuizAttempts']);
         });
 
         Route::prefix('answers')->group(function () {
-            Route::get('/', [GuestAnswerController::class, 'getAnswers']);
-            Route::post('/', [GuestAnswerController::class, 'createAnswer']);
-            Route::post('/bulk', [GuestAnswerController::class, 'createBulkAnswers']);
+            Route::get('/', [AnswerController::class, 'getAnswers']);
+            Route::post('/', [AnswerController::class, 'createAnswer']);
         });
     });
 });
-
-//->middleware('permission:auth.roles.read');

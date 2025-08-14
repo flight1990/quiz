@@ -18,7 +18,6 @@ class CreateAnswerSubAction
      */
     public function run(array $payload): Answer
     {
-
         $guestId = auth('guest-api')->id();
         $payload['guest_user_id'] = $guestId;
 
