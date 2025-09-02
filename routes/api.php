@@ -18,7 +18,6 @@ use App\Http\Controllers\V1\Guest\{
     AnswerController,
     GuestUserController,
     QuizAttemptController,
-
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;

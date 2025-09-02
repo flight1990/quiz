@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources\V1\QuizAttempts;
 
+use App\Http\Resources\V1\GuestUsers\GuestUserResource;
+use App\Http\Resources\V1\Quizzes\QuizResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,6 +24,8 @@ class QuizAttemptResource extends JsonResource
             'guest_user_id' => $this->whenHas('guest_user_id'),
             'started_at' => $this->whenHas('started_at'),
             'completed_at' => $this->whenHas('completed_at'),
+            'quiz' => new QuizResource($this->whenLoaded('quiz')),
+            'guest_user' => new GuestUserResource($this->whenLoaded('guestUser')),
         ];
     }
 }

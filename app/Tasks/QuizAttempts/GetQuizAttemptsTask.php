@@ -3,8 +3,8 @@
 namespace App\Tasks\QuizAttempts;
 
 use App\Data\Repositories\QuizAttemptRepository;
-use App\Models\QuizAttempt;
 use App\Tasks\Task;
+use Illuminate\Support\Collection;
 
 class GetQuizAttemptsTask extends Task
 {
@@ -13,7 +13,7 @@ class GetQuizAttemptsTask extends Task
     }
 
 
-    public function run(): QuizAttempt
+    public function run(): Collection
     {
         return $this->repository->get();
     }

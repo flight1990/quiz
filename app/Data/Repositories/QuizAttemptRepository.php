@@ -9,13 +9,12 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class QuizAttemptRepository extends BaseRepository
 {
-    protected array $allowedSort = ['id'];
+    protected array $allowedSort = ['id', 'started_at', 'completed_at'];
 
-//    protected array $allowedWith = [
-//        'options',
-//        'question' => ['options', 'quiz'],
-//        'guestUser' => ['unit']
-//    ];
+    protected array $allowedWith = [
+        'quiz' => ['questions'],
+        'guestUser' => ['unit']
+    ];
 
     /**
      * @throws RepositoryException
