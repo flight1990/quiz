@@ -137,6 +137,7 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('quizzes')->group(function () {
             Route::get('/', [GuestQuizController::class, 'getQuizzes']);
+            Route::get('/{id}', [GuestQuizController::class, 'findQuizById']);
         });
 
         Route::prefix('quiz-users')->group(function () {
@@ -151,5 +152,3 @@ Route::prefix('v1')->group(function () {
         });
     });
 });
-
-//->middleware('permission:auth.roles.read');
