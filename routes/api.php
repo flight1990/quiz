@@ -11,6 +11,7 @@ use App\Http\Controllers\V1\Admin\{
     UserController as AdminUserController,
     RoleController as AdminRoleController,
     PermissionController as AdminPermissionController,
+    StatisticController as AdminStatisticController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
@@ -40,6 +41,11 @@ Route::prefix('v1')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('admin')->middleware('auth:api')->group(function () {
+        Route::prefix('statistics')->group(function () {
+            Route::get('/quizzes/{id}', [AdminStatisticController::class, 'getQuizStatisticByQuizId']);
+            Route::get('/questions/{id}', [AdminStatisticController::class, 'getQuestionStatisticByQuizId']);
+        });
+
         Route::prefix('users')->group(function () {
             Route::get('/', [AdminUserController::class, 'getUsers'])->middleware('permission:user.view');
             Route::post('/', [AdminUserController::class, 'createUser'])->middleware('permission:user.create');
