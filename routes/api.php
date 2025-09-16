@@ -42,8 +42,14 @@ Route::prefix('v1')->group(function () {
     */
     Route::prefix('admin')->middleware('auth:api')->group(function () {
         Route::prefix('statistics')->group(function () {
-            Route::get('/quizzes/{id}', [AdminStatisticController::class, 'getQuizStatisticByQuizId']);
-            Route::get('/questions/{id}', [AdminStatisticController::class, 'getQuestionStatisticByQuizId']);
+            Route::prefix('quizzes')->group(function () {
+                Route::get('/{id}', [AdminStatisticController::class, 'getQuizStatisticById']);
+                Route::get('/{id}/questions', [AdminStatisticController::class, 'getQuestionStatisticByQuizId']);
+            });
+
+            Route::prefix('questions')->group(function () {
+                Route::get('/{id}', [AdminStatisticController::class, 'getQuestionStatisticByQuestionId']);
+            });
         });
 
         Route::prefix('users')->group(function () {
