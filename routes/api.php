@@ -132,6 +132,10 @@ Route::prefix('v1')->group(function () {
         Route::post('/anonymous/token', [GuestGuestUserController::class, 'anonymousToken']);
     });
 
+    Route::prefix('quizzes')->group(function () {
+        Route::get('/{slug}', [GuestQuizController::class, 'findQuizBySlug']);
+    });
+
     Route::prefix('units')->group(function () {
         Route::get('/', [GuestUnitController::class, 'getUnits']);
     });
