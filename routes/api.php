@@ -122,23 +122,6 @@ Route::prefix('v1')->group(function () {
         });
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | Public guest routes (No auth)
-    |--------------------------------------------------------------------------
-    */
-    Route::prefix('guest-users')->group(function () {
-        Route::post('/token', [GuestGuestUserController::class, 'token']);
-        Route::post('/anonymous/token', [GuestGuestUserController::class, 'anonymousToken']);
-    });
-
-    Route::prefix('quizzes')->group(function () {
-        Route::get('/{slug}', [GuestQuizController::class, 'findQuizBySlug']);
-    });
-
-    Route::prefix('units')->group(function () {
-        Route::get('/', [GuestUnitController::class, 'getUnits']);
-    });
 
     /*
     |--------------------------------------------------------------------------
@@ -153,7 +136,8 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('quizzes')->group(function () {
             Route::get('/', [GuestQuizController::class, 'getQuizzes']);
-            Route::get('/{id}', [GuestQuizController::class, 'findQuizById']);
+            Route::get('/{id}', [GuestQuizController::class, 'findQuizById'])
+                ->where('id', '[0-9]+');
         });
 
         Route::prefix('quiz-users')->group(function () {
@@ -166,5 +150,24 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [GuestAnswerController::class, 'createAnswer']);
             Route::post('/bulk', [GuestAnswerController::class, 'createBulkAnswers']);
         });
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Public guest routes (No auth)
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('guest-users')->group(function () {
+        Route::post('/token', [GuestGuestUserController::class, 'token']);
+        Route::post('/anonymous/token', [GuestGuestUserController::class, 'anonymousToken']);
+    });
+
+    Route::prefix('quizzes')->group(function () {
+        Route::get('/{slug}', [GuestQuizController::class, 'findQuizBySlug'])
+            ->where('slug', '[A-Za-z0-9\-_]+');
+    });
+
+    Route::prefix('units')->group(function () {
+        Route::get('/', [GuestUnitController::class, 'getUnits']);
     });
 });

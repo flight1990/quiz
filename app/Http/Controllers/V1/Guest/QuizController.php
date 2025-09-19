@@ -10,7 +10,6 @@ use App\Http\Resources\V1\Quizzes\QuizResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
-use Illuminate\Support\Str;
 
 class QuizController extends ApiController
 {
