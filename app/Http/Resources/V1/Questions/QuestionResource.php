@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Questions;
 
+use App\Http\Resources\V1\Answers\AnswerResource;
 use App\Http\Resources\V1\Options\OptionResource;
 use App\Http\Resources\V1\Quizzes\QuizResource;
 use Illuminate\Http\Request;
@@ -29,6 +30,7 @@ class QuestionResource extends JsonResource
             'updated_at' => $this->whenHas('updated_at'),
             'quiz' => new QuizResource($this->whenLoaded('quiz')),
             'options' => OptionResource::collection($this->whenLoaded('options')),
+            'answers' => AnswerResource::collection($this->whenLoaded('answers')),
         ];
     }
 }

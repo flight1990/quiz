@@ -16,6 +16,7 @@ class QuestionRepository extends BaseRepository
     protected array $allowedWith = [
         'options',
         'quiz',
+        'answers' => ['options']
     ];
 
     /**
