@@ -39,6 +39,7 @@ class UpdateQuestionRequest extends FormRequest
             'order' => ['sometimes', 'nullable', 'integer'],
             'answer_timer' => ['sometimes', 'nullable', 'integer'],
             'quiz_id' => ['sometimes', 'integer', 'exists:quizzes,id'],
+            'is_other' => ['nullable', 'boolean'],
         ], $optionsRules), $except);
     }
 }

@@ -38,6 +38,7 @@ class CreateQuestionRequest extends FormRequest
             'order' => ['nullable', 'integer'],
             'answer_timer' => ['nullable', 'integer'],
             'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
+            'is_other' => ['nullable', 'boolean'],
         ], $optionsRules), $except);
     }
 }

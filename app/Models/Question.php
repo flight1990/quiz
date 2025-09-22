@@ -16,10 +16,12 @@ class Question extends Model
         'answer_type',
         'answer_timer',
         'is_multiple',
+        'is_other',
     ];
 
     protected $casts = [
-        'is_multiple' => 'boolean'
+        'is_multiple' => 'boolean',
+        'is_other' => 'boolean',
     ];
 
     public function quiz(): BelongsTo
