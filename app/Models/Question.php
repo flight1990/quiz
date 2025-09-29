@@ -17,6 +17,7 @@ class Question extends Model
         'answer_timer',
         'is_multiple',
         'is_other',
+        'type',
     ];
 
     protected $casts = [

@@ -40,6 +40,7 @@ class UpdateQuestionRequest extends FormRequest
             'answer_timer' => ['sometimes', 'nullable', 'integer'],
             'quiz_id' => ['sometimes', 'integer', 'exists:quizzes,id'],
             'is_other' => ['nullable', 'boolean'],
+            'type' => ['sometimes', 'string', 'in:text,test,choice']
         ], $optionsRules), $except);
     }
 }
