@@ -13,7 +13,7 @@ return new class extends Migration
     {
         if (!Schema::hasColumn('questions', 'type')) {
             Schema::table('questions', function (Blueprint $table) {
-                $table->enum('type', ['text', 'test', 'choice'])->default('test');
+                $table->enum('type', ['text', 'test', 'choice'])->default('text');
             });
         }
     }
