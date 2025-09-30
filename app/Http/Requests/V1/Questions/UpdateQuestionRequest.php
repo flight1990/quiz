@@ -23,9 +23,15 @@ class UpdateQuestionRequest extends FormRequest
     public static function getRules(array $except = [], ?int $questionId = null): array
     {
         $optionsRules = [
-            'options' => ['sometimes', 'array', new HasCorrectOption($questionId)],
+            'options' => ['sometimes', 'array'],
             'options.*.id' => ['sometimes', 'integer', 'exists:options,id'],
         ];
+
+        $type = request()->input('type');
+
+        if ($type === 'test') {
+            $optionsRules['options'][] = new HasCorrectOption($questionId);
+        }
 
         $updateOptionRules = UpdateOptionRequest::getRules(['question_id']);
 
@@ -40,7 +46,11 @@ class UpdateQuestionRequest extends FormRequest
             'answer_timer' => ['sometimes', 'nullable', 'integer'],
             'quiz_id' => ['sometimes', 'integer', 'exists:quizzes,id'],
             'is_other' => ['nullable', 'boolean'],
-            'type' => ['sometimes', 'string', 'in:text,test,choice']
+            'is_multiple' => [
+                'boolean',
+                'required_unless:type,test'
+            ],
+            'type' => ['sometimes', 'string', 'in:text,test,choice'],
         ], $optionsRules), $except);
     }
 }

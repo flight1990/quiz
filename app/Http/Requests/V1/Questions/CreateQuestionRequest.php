@@ -3,7 +3,6 @@
 namespace App\Http\Requests\V1\Questions;
 
 use App\Http\Requests\V1\Options\CreateOptionRequest;
-use App\Models\Option;
 use App\Rules\HasCorrectOption;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
@@ -23,8 +22,14 @@ class CreateQuestionRequest extends FormRequest
     public static function getRules(array $except = [], ?int $questionId = null): array
     {
         $optionsRules = [
-            'options' => ['sometimes', 'array', new HasCorrectOption($questionId)],
+            'options' => ['sometimes', 'array'],
         ];
+
+        $type = request()->input('type');
+
+        if ($type === 'test') {
+            $optionsRules['options'][] = new HasCorrectOption($questionId);
+        }
 
         $createOptionRules = CreateOptionRequest::getRules(['question_id']);
 
@@ -39,6 +44,10 @@ class CreateQuestionRequest extends FormRequest
             'answer_timer' => ['nullable', 'integer'],
             'quiz_id' => ['required', 'integer', 'exists:quizzes,id'],
             'is_other' => ['nullable', 'boolean'],
+            'is_multiple' => [
+                'boolean',
+                'required_unless:type,test'
+            ],
             'type' => ['required', 'string', 'in:text,test,choice']
         ], $optionsRules), $except);
     }

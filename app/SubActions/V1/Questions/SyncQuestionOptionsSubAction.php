@@ -31,9 +31,11 @@ class SyncQuestionOptionsSubAction
 
             $question->options()->whereNotIn('id', $existingIds)->delete();
 
-            $question->update([
-                'is_multiple' => $correctCount > 1
-            ]);
+            if ($question['type'] === 'test' && !isset($question['is_multiple'])) {
+                $question->update([
+                    'is_multiple' => $correctCount > 1
+                ]);
+            }
         });
     }
 }
