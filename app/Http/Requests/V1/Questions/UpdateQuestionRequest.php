@@ -48,9 +48,20 @@ class UpdateQuestionRequest extends FormRequest
             'is_other' => ['nullable', 'boolean'],
             'is_multiple' => [
                 'boolean',
-                'required_unless:type,test'
+                'required_if:type,choice',
             ],
             'type' => ['sometimes', 'string', 'in:text,test,choice'],
         ], $optionsRules), $except);
+    }
+
+    public function validated($key = null, $default = null)
+    {
+        $data = parent::validated($key, $default);
+
+        if (!array_key_exists('is_multiple', $data)) {
+            $data['is_multiple'] = false;
+        }
+
+        return $data;
     }
 }
