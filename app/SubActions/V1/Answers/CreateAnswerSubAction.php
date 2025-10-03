@@ -5,6 +5,7 @@ namespace App\SubActions\V1\Answers;
 use App\Models\Answer;
 use App\Tasks\Answers\V1\CreateAnswerTask;
 use App\Tasks\Options\V1\GetCorrectOptionsByQuestionIdTask;
+use App\Tasks\Questions\V1\FindQuestionByIdTask;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class CreateAnswerSubAction
@@ -22,13 +23,19 @@ class CreateAnswerSubAction
         if (!empty($payload['options'])) {
             $answer->options()->sync($payload['options']);
 
-            $correctOptionIds = app(GetCorrectOptionsByQuestionIdTask::class)->run($answer->question_id);
-            $selectedOptionIds = $payload['options'];
+            $question = app(FindQuestionByIdTask::class)->run($answer->question_id);
 
-            sort($correctOptionIds);
-            sort($selectedOptionIds);
+            if ($question['type'] === 'test') {
+                $correctOptionIds = app(GetCorrectOptionsByQuestionIdTask::class)->run($answer->question_id);
+                $selectedOptionIds = $payload['options'];
 
-            $isCorrect = ($correctOptionIds === $selectedOptionIds);
+                sort($correctOptionIds);
+                sort($selectedOptionIds);
+
+                $isCorrect = ($correctOptionIds === $selectedOptionIds);
+            } else {
+                $isCorrect = true;
+            }
         }
 
         elseif (!empty($payload['other'])) {
