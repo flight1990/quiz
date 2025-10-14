@@ -14,13 +14,15 @@ class GetQuizStatisticByQuizIdTask extends Task
             ->join('guest_users as gu', 'gu.id', '=', 'a.guest_user_id')
             ->join('questions as q', 'q.id', '=', 'a.question_id')
             ->join('quizzes as quiz', 'quiz.id', '=', 'q.quiz_id')
+            ->leftJoin('units as u', 'u.id', '=', 'gu.unit_id')
             ->select(
                 'quiz.id as quiz_id',
                 'gu.unit_id',
+                'u.name as unit_name',
                 DB::raw('COUNT(DISTINCT gu.id) as total_users')
             )
             ->where('quiz.id', $quizId)
-            ->groupBy('quiz.id', 'gu.unit_id')
+            ->groupBy('quiz.id', 'gu.unit_id', 'u.name')
             ->orderBy('gu.unit_id')
             ->get();
     }

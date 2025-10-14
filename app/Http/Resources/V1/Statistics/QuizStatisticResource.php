@@ -17,6 +17,7 @@ class QuizStatisticResource extends JsonResource
         return [
             'quiz_id' => $this->resource->quiz_id,
             'unit_id' => $this->resource->unit_id,
+            'unit_name' => $this->resource->unit_name,
             'total_users' => $this->resource->total_users,
         ];
     }
