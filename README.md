@@ -9,3 +9,5 @@ php artisan passport:client --password
 php artisan passport:client --personal
 
 php artisan db:seed --class=RolesAndPermissionsSeeder
+
+php artisan reverb:install
