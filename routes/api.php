@@ -12,13 +12,15 @@ use App\Http\Controllers\V1\Admin\{
     RoleController as AdminRoleController,
     PermissionController as AdminPermissionController,
     StatisticController as AdminStatisticController,
+    QuestionAttendController as AdminQuestionAttendController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
     QuizUserController as GuestQuizUserController,
     UnitController as GuestUnitController,
     AnswerController as GuestAnswerController,
-    GuestUserController as GuestGuestUserController
+    GuestUserController as GuestGuestUserController,
+    QuestionAttendController as GuestQuestionAttendController,
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;
@@ -120,8 +122,11 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [AdminQuizUserController::class, 'getQuizUsers'])->middleware('permission:quiz-user.view');
             Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser'])->middleware('permission:quiz-user.delete');
         });
-    });
 
+        Route::prefix('question-attends')->group(function () {
+            Route::get('/', [AdminQuestionAttendController::class, 'getQuestionAttends']);
+        });
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -169,5 +174,9 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('units')->group(function () {
         Route::get('/', [GuestUnitController::class, 'getUnits']);
+    });
+
+    Route::prefix('question-attends')->group(function () {
+        Route::post('/', [GuestQuestionAttendController::class, 'createQuestionAttend']);
     });
 });
