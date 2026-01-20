@@ -16,6 +16,7 @@ class Quiz extends Model
         'is_active',
         'user_id',
         'description',
+        'type',
     ];
 
     protected $casts = [

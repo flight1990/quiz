@@ -11,9 +11,10 @@ class QuizRepository extends BaseRepository
     protected $fieldSearchable = [
         'id' => '=',
         'title' => 'like',
+        'type' => '='
     ];
 
-    protected array $allowedSort = ['id', 'is_active', 'is_anonymous', 'title'];
+    protected array $allowedSort = ['id', 'is_active', 'is_anonymous', 'title', 'type'];
     protected array $allowedWith = [
         'questions' => ['options'],
         'units' => ['users']

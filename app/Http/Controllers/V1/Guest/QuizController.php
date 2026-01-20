@@ -17,10 +17,10 @@ class QuizController extends ApiController
     {
         $guest = auth('guest-api')->user();
 
-        $data = app(GetQuizzesAction::class)->run([
+        $data = app(GetQuizzesAction::class)->run(array_merge([
             'is_active' => true,
             'is_anonymous' => $guest['unit_id'] ? null : true,
-        ]);
+        ], $request->all()));
 
         return $this->respondWithSuccess(QuizResource::collection($data));
     }

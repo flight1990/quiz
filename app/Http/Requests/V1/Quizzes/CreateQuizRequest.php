@@ -26,6 +26,7 @@ class CreateQuizRequest extends FormRequest
 
         return array_merge([
             'title' => ['required', 'string', 'max:200'],
+            'type' => ['nullable', 'string', 'in:async,online'],
             'is_anonymous' => ['nullable', 'boolean'],
             'is_active' => ['nullable', 'boolean'],
             'description' => ['nullable', 'string', 'max:6000'],
