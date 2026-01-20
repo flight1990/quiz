@@ -14,6 +14,11 @@ class CreateQuizSessionAction extends Action
      */
     public function run(array $payload): QuizSession
     {
-        return app(CreateQuizSessionTask::class)->run($payload);
+        return app(CreateQuizSessionTask::class)->run(
+            array_merge($payload, [
+                'current_question_id' => null,
+                'created_at' => now(),
+            ])
+        );
     }
 }

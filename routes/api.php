@@ -12,6 +12,7 @@ use App\Http\Controllers\V1\Admin\{
     RoleController as AdminRoleController,
     PermissionController as AdminPermissionController,
     StatisticController as AdminStatisticController,
+    QuizSessionController as AdminQuizSessionController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
@@ -120,8 +121,18 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [AdminQuizUserController::class, 'getQuizUsers'])->middleware('permission:quiz-user.view');
             Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser'])->middleware('permission:quiz-user.delete');
         });
-    });
 
+        Route::prefix('quiz-sessions')->group(function () {
+            Route::get('/', [AdminQuizSessionController::class, 'getQuizSessions']);
+
+            Route::post('/create', [AdminQuizSessionController::class, 'createQuizSession']);
+            Route::post('/{id}/start', [AdminQuizSessionController::class, 'startQuizSession']);
+            Route::post('/{id}/finish', [AdminQuizSessionController::class, 'finishQuizSession']);
+
+            Route::get('/{id}', [AdminQuizSessionController::class, 'findQuizSessionById']);
+            Route::delete('/{id}', [AdminQuizSessionController::class, 'deleteQuizSession']);
+        });
+    });
 
     /*
     |--------------------------------------------------------------------------
