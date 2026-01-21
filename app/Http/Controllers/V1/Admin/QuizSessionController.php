@@ -10,7 +10,6 @@ use App\Actions\QuizSessions\V1\GetQuizSessionsAction;
 use App\Actions\QuizSessions\V1\StartQuizSessionAction;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\V1\QuizSession\CreateQuizSessionRequest;
-use App\Http\Requests\V1\QuizSession\StartQuizSessionRequest;
 use App\Http\Resources\V1\QuizSessions\QuizSessionResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -48,9 +47,9 @@ class QuizSessionController extends ApiController
         return $this->respondWithSuccessCreate(new QuizSessionResource($data));
     }
 
-    public function startQuizSession(StartQuizSessionRequest $request, int $id): JsonResponse
+    public function startQuizSession(int $id): JsonResponse
     {
-        $data = app(StartQuizSessionAction::class)->run($request->validated(), $id);
+        $data = app(StartQuizSessionAction::class)->run($id);
         return $this->respondWithSuccessCreate(new QuizSessionResource($data));
     }
 
