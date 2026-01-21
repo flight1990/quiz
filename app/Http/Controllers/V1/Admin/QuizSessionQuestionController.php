@@ -35,34 +35,22 @@ class QuizSessionQuestionController extends ApiController
         return $this->noContent();
     }
 
-    public function setQuestion(SetQuizSessionQuestionLogRequest $request, int $sessionId): JsonResource
+    public function setQuestion(SetQuizSessionQuestionLogRequest $request): JsonResource
     {
-        $data = app(SetQuizSessionQuestionLogAction::class)->run(array_merge(
-            $request->validated(),
-            ['session_id' => $sessionId]
-        ));
-
+        $data = app(SetQuizSessionQuestionLogAction::class)->run($request->validated());
         return $this->respondWithSuccess(new QuizSessionQuestionLogResource($data));
     }
 
-    public function skipQuestion(SetQuizSessionQuestionLogRequest $request, int $sessionId): JsonResource
+    public function skipQuestion(SetQuizSessionQuestionLogRequest $request): JsonResource
     {
-        $data = app(SkipQuizSessionQuestionLogAction::class)->run(array_merge(
-            $request->validated(),
-            ['session_id' => $sessionId]
-        ));
-
+        $data = app(SkipQuizSessionQuestionLogAction::class)->run($request->validated());
         return $this->respondWithSuccess(new QuizSessionQuestionLogResource($data));
     }
 
 
-    public function finishQuestion(SetQuizSessionQuestionLogRequest $request, int $sessionId): JsonResource
+    public function finishQuestion(SetQuizSessionQuestionLogRequest $request): JsonResource
     {
-        $data = app(FinishQuizSessionQuestionLogAction::class)->run(array_merge(
-            $request->validated(),
-            ['session_id' => $sessionId]
-        ));
-
+        $data = app(FinishQuizSessionQuestionLogAction::class)->run($request->validated());
         return $this->respondWithSuccess(new QuizSessionQuestionLogResource($data));
     }
 }

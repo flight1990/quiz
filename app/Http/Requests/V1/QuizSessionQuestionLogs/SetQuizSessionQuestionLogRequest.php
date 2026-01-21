@@ -14,7 +14,8 @@ class SetQuizSessionQuestionLogRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'question_id' => ['required', 'int', 'exists:questions,id']
+            'question_id' => ['required', 'int', 'exists:questions,id'],
+            'session_id' => ['required', 'int', 'exists:quiz_sessions,id'],
         ];
     }
 }

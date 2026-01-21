@@ -125,21 +125,24 @@ Route::prefix('v1')->group(function () {
 
         Route::prefix('quiz-sessions')->group(function () {
             Route::get('/', [AdminQuizSessionController::class, 'getSessions']);
-
             Route::post('/create', [AdminQuizSessionController::class, 'createSession']);
             Route::post('/{id}/start', [AdminQuizSessionController::class, 'startSession']);
             Route::post('/{id}/finish', [AdminQuizSessionController::class, 'finishSession']);
-
             Route::get('/{id}', [AdminQuizSessionController::class, 'findSessionById']);
             Route::delete('/{id}', [AdminQuizSessionController::class, 'deleteSession']);
-
-            Route::post('/{id}/current-question/set', [AdminQuizSessionQuestionController::class, 'setQuestion']);
-            Route::post('/{id}/current-question/skip', [AdminQuizSessionQuestionController::class, 'skipQuestion']);
-            Route::post('/{id}/current-question/finish', [AdminQuizSessionQuestionController::class, 'finishQuestion']);
         });
+
+
 
         Route::prefix('quiz-sessions-questions')->group(function () {
             Route::get('/', [AdminQuizSessionQuestionController::class, 'getQuestions']);
+
+            Route::prefix('/question')->group(function () {
+                Route::post('/set', [AdminQuizSessionQuestionController::class, 'setQuestion']);
+                Route::post('/skip', [AdminQuizSessionQuestionController::class, 'skipQuestion']);
+                Route::post('/finish', [AdminQuizSessionQuestionController::class, 'finishQuestion']);
+            });
+
             Route::get('/{id}', [AdminQuizSessionQuestionController::class, 'findQuestionById']);
             Route::delete('/{id}', [AdminQuizSessionQuestionController::class, 'deleteQuestion']);
         });
