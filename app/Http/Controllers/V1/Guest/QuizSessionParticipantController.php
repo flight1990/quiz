@@ -2,29 +2,24 @@
 
 namespace App\Http\Controllers\V1\Guest;
 
-use App\Actions\QuizSessions\V1\CreateQuizSessionAction;
-use App\Actions\QuizSessions\V1\DeleteQuizSessionAction;
-use App\Actions\QuizSessions\V1\FindQuizSessionByIdAction;
-use App\Actions\QuizSessions\V1\FinishQuizSessionAction;
-use App\Actions\QuizSessions\V1\GetQuizSessionsAction;
-use App\Actions\QuizSessions\V1\StartQuizSessionAction;
+use App\Actions\QuizSessionParticipants\V1\JoinQuizSessionParticipantAction;
+use App\Actions\QuizSessionParticipants\V1\LeaveQuizSessionParticipantAction;
 use App\Http\Controllers\ApiController;
-use App\Http\Requests\V1\QuizSession\CreateQuizSessionRequest;
-use App\Http\Resources\V1\QuizSessions\QuizSessionResource;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\V1\QuizSessionParticipants\SetQuizSessionParticipantRequest;
+use App\Http\Resources\V1\QuizSessions\QuizSessionParticipantResource;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class QuizSessionParticipantController extends ApiController
 {
-    public function joinParticipant()
+    public function joinParticipant(SetQuizSessionParticipantRequest $request): JsonResource
     {
-        dd('joinParticipant');
+        $data = app(JoinQuizSessionParticipantAction::class)->run($request->validated());
+        return $this->respondWithSuccess(new QuizSessionParticipantResource($data));
     }
 
-    public function leftParticipant()
+    public function leaveParticipant(SetQuizSessionParticipantRequest $request): JsonResource
     {
-        dd('leftParticipant');
+        $data = app(LeaveQuizSessionParticipantAction::class)->run($request->validated());
+        return $this->respondWithSuccess(new QuizSessionParticipantResource($data));
     }
 }

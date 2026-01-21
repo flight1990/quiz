@@ -181,6 +181,11 @@ Route::prefix('v1')->group(function () {
             Route::post('/', [GuestAnswerController::class, 'createAnswer']);
             Route::post('/bulk', [GuestAnswerController::class, 'createBulkAnswers']);
         });
+
+        Route::prefix('quiz-sessions-participants')->group(function () {
+            Route::post('/join', [GuestQuizSessionParticipantController::class, 'joinParticipant']);
+            Route::post('/leave', [GuestQuizSessionParticipantController::class, 'leaveParticipant']);
+        });
     });
 
     /*
