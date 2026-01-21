@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 class GetQuizSessionParticipantsAction extends Action
 {
-    public function run(?array $params): Collection
+    public function run(array $params = []): Collection
     {
         return app(GetQuizSessionParticipantsTask::class)->run();
     }

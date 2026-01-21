@@ -14,13 +14,15 @@ use App\Http\Controllers\V1\Admin\{
     StatisticController as AdminStatisticController,
     QuizSessionController as AdminQuizSessionController,
     QuizSessionQuestionController as AdminQuizSessionQuestionController,
+    QuizSessionParticipantController as AdminQuizSessionParticipantController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
     QuizUserController as GuestQuizUserController,
     UnitController as GuestUnitController,
     AnswerController as GuestAnswerController,
-    GuestUserController as GuestGuestUserController
+    GuestUserController as GuestGuestUserController,
+    QuizSessionParticipantController as GuestQuizSessionParticipantController,
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;
@@ -132,8 +134,6 @@ Route::prefix('v1')->group(function () {
             Route::delete('/{id}', [AdminQuizSessionController::class, 'deleteSession']);
         });
 
-
-
         Route::prefix('quiz-sessions-questions')->group(function () {
             Route::get('/', [AdminQuizSessionQuestionController::class, 'getQuestions']);
 
@@ -145,6 +145,12 @@ Route::prefix('v1')->group(function () {
 
             Route::get('/{id}', [AdminQuizSessionQuestionController::class, 'findQuestionById']);
             Route::delete('/{id}', [AdminQuizSessionQuestionController::class, 'deleteQuestion']);
+        });
+
+        Route::prefix('quiz-sessions-participants')->group(function () {
+            Route::get('/', [AdminQuizSessionParticipantController::class, 'getParticipants']);
+            Route::get('/{id}', [AdminQuizSessionParticipantController::class, 'findParticipantById']);
+            Route::delete('/{id}', [AdminQuizSessionParticipantController::class, 'deleteParticipant']);
         });
     });
 
