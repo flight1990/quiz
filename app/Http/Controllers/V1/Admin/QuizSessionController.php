@@ -18,25 +18,25 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class QuizSessionController extends ApiController
 {
-    public function getQuizSessions(Request $request): ResourceCollection|JsonResource
+    public function getSessions(Request $request): ResourceCollection|JsonResource
     {
         $data = app(GetQuizSessionsAction::class)->run($request->all());
         return $this->respondWithSuccess(QuizSessionResource::collection($data));
     }
 
-    public function findQuizSessionById(int $id): JsonResource
+    public function findSessionById(int $id): JsonResource
     {
         $data = app(FindQuizSessionByIdAction::class)->run($id);
         return $this->respondWithSuccess(new QuizSessionResource($data));
     }
 
-    public function deleteQuizSession(int $id): JsonResponse
+    public function deleteSession(int $id): JsonResponse
     {
         app(DeleteQuizSessionAction::class)->run($id);
         return $this->noContent();
     }
 
-    public function createQuizSession(CreateQuizSessionRequest $request): JsonResponse
+    public function createSession(CreateQuizSessionRequest $request): JsonResponse
     {
         $data = app(CreateQuizSessionAction::class)->run(
             array_merge($request->validated(), [
@@ -47,13 +47,13 @@ class QuizSessionController extends ApiController
         return $this->respondWithSuccessCreate(new QuizSessionResource($data));
     }
 
-    public function startQuizSession(int $id): JsonResponse
+    public function startSession(int $id): JsonResponse
     {
         $data = app(StartQuizSessionAction::class)->run($id);
         return $this->respondWithSuccessCreate(new QuizSessionResource($data));
     }
 
-    public function finishQuizSession(int $id): JsonResponse
+    public function finishSession(int $id): JsonResponse
     {
         $data = app(FinishQuizSessionAction::class)->run($id);
         return $this->respondWithSuccessCreate(new QuizSessionResource($data));

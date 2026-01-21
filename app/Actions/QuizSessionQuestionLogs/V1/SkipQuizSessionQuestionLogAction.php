@@ -7,13 +7,18 @@ use App\Models\QuizSessionQuestionLog;
 use App\Tasks\QuizSessionQuestionLogs\V1\CreateQuizSessionQuestionLogTask;
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class CreateQuizSessionQuestionLogAction extends Action
+class SkipQuizSessionQuestionLogAction extends Action
 {
     /**
      * @throws ValidatorException
      */
     public function run(array $payload): QuizSessionQuestionLog
     {
-        return app(CreateQuizSessionQuestionLogTask::class)->run($payload);
+        return app(CreateQuizSessionQuestionLogTask::class)->run([
+            'quiz_session_id' => $payload['session_id'],
+            'question_id' => $payload['question_id'],
+            'status' => 'skipped',
+            'datetime' => now(),
+        ]);
     }
 }

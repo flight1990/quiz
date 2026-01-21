@@ -26,6 +26,8 @@ class QuizSessionQuestionLogResource extends JsonResource
             'question_id' => $this->whenHas('question_id'),
             'status' => $this->whenHas('status'),
             'datetime' => $this->whenHas('datetime'),
+            'session' => new QuizSessionResource($this->whenLoaded('session')),
+            'question' => new  QuestionResource($this->whenLoaded('question')),
         ];
     }
 }
