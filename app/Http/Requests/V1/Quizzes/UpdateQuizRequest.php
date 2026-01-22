@@ -27,6 +27,7 @@ class UpdateQuizRequest extends FormRequest
 
         return array_merge([
             'title' => ['sometimes', 'string', 'max:200'],
+            'type' => ['nullable', 'string', 'in:async,online'],
             'is_anonymous' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
             'description' => ['sometimes', 'nullable', 'string', 'max:6000'],

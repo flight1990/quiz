@@ -12,13 +12,17 @@ use App\Http\Controllers\V1\Admin\{
     RoleController as AdminRoleController,
     PermissionController as AdminPermissionController,
     StatisticController as AdminStatisticController,
+    QuizSessionController as AdminQuizSessionController,
+    QuizSessionQuestionController as AdminQuizSessionQuestionController,
+    QuizSessionParticipantController as AdminQuizSessionParticipantController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
     QuizUserController as GuestQuizUserController,
     UnitController as GuestUnitController,
     AnswerController as GuestAnswerController,
-    GuestUserController as GuestGuestUserController
+    GuestUserController as GuestGuestUserController,
+    QuizSessionParticipantController as GuestQuizSessionParticipantController,
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;
@@ -120,8 +124,35 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [AdminQuizUserController::class, 'getQuizUsers'])->middleware('permission:quiz-user.view');
             Route::delete('/{id}', [AdminQuizUserController::class, 'deleteQuizUser'])->middleware('permission:quiz-user.delete');
         });
-    });
 
+        Route::prefix('quiz-sessions')->group(function () {
+            Route::get('/', [AdminQuizSessionController::class, 'getSessions']);
+            Route::post('/create', [AdminQuizSessionController::class, 'createSession']);
+            Route::post('/{id}/start', [AdminQuizSessionController::class, 'startSession']);
+            Route::post('/{id}/finish', [AdminQuizSessionController::class, 'finishSession']);
+            Route::get('/{id}', [AdminQuizSessionController::class, 'findSessionById']);
+            Route::delete('/{id}', [AdminQuizSessionController::class, 'deleteSession']);
+        });
+
+        Route::prefix('quiz-sessions-questions')->group(function () {
+            Route::get('/', [AdminQuizSessionQuestionController::class, 'getQuestions']);
+
+            Route::prefix('/question')->group(function () {
+                Route::post('/set', [AdminQuizSessionQuestionController::class, 'setQuestion']);
+                Route::post('/skip', [AdminQuizSessionQuestionController::class, 'skipQuestion']);
+                Route::post('/finish', [AdminQuizSessionQuestionController::class, 'finishQuestion']);
+            });
+
+            Route::get('/{id}', [AdminQuizSessionQuestionController::class, 'findQuestionById']);
+            Route::delete('/{id}', [AdminQuizSessionQuestionController::class, 'deleteQuestion']);
+        });
+
+        Route::prefix('quiz-sessions-participants')->group(function () {
+            Route::get('/', [AdminQuizSessionParticipantController::class, 'getParticipants']);
+            Route::get('/{id}', [AdminQuizSessionParticipantController::class, 'findParticipantById']);
+            Route::delete('/{id}', [AdminQuizSessionParticipantController::class, 'deleteParticipant']);
+        });
+    });
 
     /*
     |--------------------------------------------------------------------------
@@ -149,6 +180,11 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [GuestAnswerController::class, 'getAnswers']);
             Route::post('/', [GuestAnswerController::class, 'createAnswer']);
             Route::post('/bulk', [GuestAnswerController::class, 'createBulkAnswers']);
+        });
+
+        Route::prefix('quiz-sessions-participants')->group(function () {
+            Route::post('/join', [GuestQuizSessionParticipantController::class, 'joinParticipant']);
+            Route::post('/leave', [GuestQuizSessionParticipantController::class, 'leaveParticipant']);
         });
     });
 

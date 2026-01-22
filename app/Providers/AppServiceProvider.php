@@ -5,9 +5,15 @@ namespace App\Providers;
 use App\Models\Answer;
 use App\Models\Question;
 use App\Models\Quiz;
+use App\Models\QuizSession;
+use App\Models\QuizSessionParticipant;
+use App\Models\QuizSessionQuestionLog;
 use App\Observers\AnswerObserver;
 use App\Observers\QuestionObserver;
 use App\Observers\QuizObserver;
+use App\Observers\QuizSessionObserver;
+use App\Observers\QuizSessionParticipantObserver;
+use App\Observers\QuizSessionQuestionLogObserver;
 use Carbon\CarbonInterval;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
@@ -30,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
         Quiz::observe(QuizObserver::class);
         Answer::observe(AnswerObserver::class);
         Question::observe(QuestionObserver::class);
+        QuizSession::observe(QuizSessionObserver::class);
+        QuizSessionParticipant::observe(QuizSessionParticipantObserver::class);
+        QuizSessionQuestionLog::observe(QuizSessionQuestionLogObserver::class);
 
         Passport::tokensExpireIn(CarbonInterval::days(2));
         Passport::refreshTokensExpireIn(CarbonInterval::days(3));
