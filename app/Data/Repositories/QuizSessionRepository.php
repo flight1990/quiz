@@ -15,7 +15,7 @@ class QuizSessionRepository extends BaseRepository
     protected array $allowedSort = ['id'];
 
     protected array $allowedWith = [
-        'quiz',
+        'quiz' => ['units'],
         'user',
         'currentQuestion' => ['options'],
         'participants',

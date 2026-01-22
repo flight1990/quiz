@@ -23,6 +23,7 @@ use App\Http\Controllers\V1\Guest\{
     AnswerController as GuestAnswerController,
     GuestUserController as GuestGuestUserController,
     QuizSessionParticipantController as GuestQuizSessionParticipantController,
+    QuizSessionController as GuestQuizSessionController,
 };
 use App\Http\Controllers\V1\TokenController;
 use Illuminate\Support\Facades\Route;
@@ -205,5 +206,9 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('units')->group(function () {
         Route::get('/', [GuestUnitController::class, 'getUnits']);
+    });
+
+    Route::prefix('quiz-sessions')->group(function () {
+        Route::get('/{id}', [GuestQuizSessionController::class, 'findSessionById']);
     });
 });
