@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('guest_user_id')
                 ->constrained('guest_users')
                 ->cascadeOnDelete();
-            $table->timestamp('joined_at')->nullable();
+            $table->timestamp('joined_at');
             $table->timestamp('left_at')->nullable();
         });
     }

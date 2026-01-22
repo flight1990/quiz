@@ -16,11 +16,12 @@ class FindActiveUserQuizSessionTask extends Task
     /**
      * @throws ValidatorException
      */
-    public function run(int $sessionId, int $guestUserId): QuizSessionParticipant
+    public function run(int $sessionId, int $guestUserId, array $columns = ['*']): QuizSessionParticipant
     {
         return $this->repository
             ->pushCriteria(new WhereFieldCriteria('quiz_session_id', $sessionId))
             ->pushCriteria(new WhereFieldCriteria('guest_user_id', $guestUserId))
-            ->firstOrFail();
+            ->pushCriteria(new WhereFieldCriteria('left_at', null))
+            ->firstOrFail($columns);
     }
 }
