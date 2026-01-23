@@ -12,7 +12,7 @@ class QuizSessionRepository extends BaseRepository
         'id' => '=',
     ];
 
-    protected array $allowedSort = ['id'];
+    protected array $allowedSort = ['id', 'created_at', 'started_at', 'finished_at'];
 
     protected array $allowedWith = [
         'quiz' => ['units'],

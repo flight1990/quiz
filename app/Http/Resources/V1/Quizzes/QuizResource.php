@@ -3,6 +3,7 @@
 namespace App\Http\Resources\V1\Quizzes;
 
 use App\Http\Resources\V1\Questions\QuestionResource;
+use App\Http\Resources\V1\QuizSessions\QuizSessionResource;
 use App\Http\Resources\V1\Units\UnitResource;
 use App\Http\Resources\V1\Users\UserResource;
 use Illuminate\Http\Request;
@@ -31,6 +32,7 @@ class QuizResource extends JsonResource
             'questions' => QuestionResource::collection($this->whenLoaded('questions')),
             'user' => new UserResource($this->whenLoaded('user')),
             'units' => UnitResource::collection($this->whenLoaded('units')),
+            'sessions' => QuizSessionResource::collection($this->whenLoaded('sessions')),
         ];
     }
 }

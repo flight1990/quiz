@@ -38,4 +38,9 @@ class Quiz extends Model
     {
         return $this->belongsToMany(Unit::class);
     }
+
+    public function sessions(): HasMany
+    {
+        return $this->hasMany(QuizSession::class, 'quiz_id');
+    }
 }

@@ -17,7 +17,8 @@ class QuizRepository extends BaseRepository
     protected array $allowedSort = ['id', 'is_active', 'is_anonymous', 'title', 'type'];
     protected array $allowedWith = [
         'questions' => ['options'],
-        'units' => ['users']
+        'units' => ['users'],
+        'sessions',
     ];
 
     /**
