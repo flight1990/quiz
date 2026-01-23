@@ -18,7 +18,7 @@ class QuizRepository extends BaseRepository
     protected array $allowedWith = [
         'questions' => ['options'],
         'units' => ['users'],
-        'sessions',
+        'sessions' => ['user'],
     ];
 
     /**
