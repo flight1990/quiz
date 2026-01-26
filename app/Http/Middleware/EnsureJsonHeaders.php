@@ -10,18 +10,26 @@ class EnsureJsonHeaders
 {
     public function handle(Request $request, Closure $next): Response
     {
+        /**
+         * Accept: должен уметь принимать JSON
+         */
         if (
-            $request->header('Accept') !== 'application/json'
+            !$request->acceptsJson()
         ) {
             return response()->json([
                 'message' => 'Invalid Accept header. Expected application/json.',
             ], 406);
         }
 
+        /**
+         * Content-Type: проверяем ТОЛЬКО если есть body
+         */
         if (
-            $request->isMethod('POST') || $request->isMethod('PUT') || $request->isMethod('PATCH')
+            in_array($request->method(), ['POST', 'PUT', 'PATCH'], true)
         ) {
-            if ($request->header('Content-Type') !== 'application/json') {
+            $hasBody = trim($request->getContent()) !== '';
+
+            if ($hasBody && !$request->isJson()) {
                 return response()->json([
                     'message' => 'Invalid Content-Type header. Expected application/json.',
                 ], 415);
