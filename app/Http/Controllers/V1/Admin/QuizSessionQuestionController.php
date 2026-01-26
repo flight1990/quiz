@@ -12,14 +12,15 @@ use App\Http\Controllers\ApiController;
 use App\Http\Requests\V1\QuizSessionQuestionLogs\SetQuizSessionQuestionLogRequest;
 use App\Http\Resources\V1\QuizSessions\QuizSessionQuestionLogResource;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class QuizSessionQuestionController extends ApiController
 {
-    public function getQuestions(): ResourceCollection|JsonResource
+    public function getQuestions(Request $request): ResourceCollection|JsonResource
     {
-        $data = app(GetQuizSessionQuestionLogsAction::class)->run();
+        $data = app(GetQuizSessionQuestionLogsAction::class)->run($request->all());
         return $this->respondWithSuccess(QuizSessionQuestionLogResource::collection($data));
     }
 
