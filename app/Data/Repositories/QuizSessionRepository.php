@@ -19,6 +19,7 @@ class QuizSessionRepository extends BaseRepository
         'user',
         'currentQuestion' => ['options'],
         'participants',
+        'answers',
         'questionLogs'
     ];
 

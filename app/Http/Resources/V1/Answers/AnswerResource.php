@@ -5,6 +5,8 @@ namespace App\Http\Resources\V1\Answers;
 use App\Http\Resources\V1\GuestUsers\GuestUserResource;
 use App\Http\Resources\V1\Options\OptionResource;
 use App\Http\Resources\V1\Questions\QuestionResource;
+use App\Http\Resources\V1\QuizSessions\QuizSessionResource;
+use App\Models\QuizSession;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -18,10 +20,12 @@ class AnswerResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+
         return [
             'id' => $this->whenHas('id'),
             'question_id' => $this->whenHas('question_id'),
             'guest_user_id' => $this->whenHas('guest_user_id'),
+            'quiz_session_id' => $this->whenHas('quiz_session_id'),
             'other' => $this->whenHas('other'),
             'is_correct' => $this->whenHas('is_correct'),
             'created_at' => $this->whenHas('created_at'),
@@ -29,6 +33,7 @@ class AnswerResource extends JsonResource
             'question' => new QuestionResource($this->whenLoaded('question')),
             'guest_user' => new GuestUserResource($this->whenLoaded('guestUser')),
             'options' => OptionResource::collection($this->whenLoaded('options')),
+            'session' => new QuizSessionResource($this->whenLoaded('session')),
         ];
     }
 }

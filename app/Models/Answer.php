@@ -11,6 +11,7 @@ class Answer extends Model
     protected $fillable = [
         'question_id',
         'guest_user_id',
+        'quiz_session_id',
         'other',
         'is_correct',
     ];
@@ -22,6 +23,11 @@ class Answer extends Model
     public function guestUser(): BelongsTo
     {
         return $this->belongsTo(GuestUser::class);
+    }
+
+    public function session(): BelongsTo
+    {
+        return $this->belongsTo(QuizSession::class, 'quiz_session_id', 'id');
     }
 
     public function question(): BelongsTo
