@@ -8,8 +8,8 @@ use Illuminate\Support\Collection;
 
 class GetQuestionStatisticByQuizIdAction extends Action
 {
-    public function run(int $quizId): Collection
+    public function run(int $quizId, array $params = []): Collection
     {
-        return app(GetQuestionStatisticByQuizIdTask::class)->run($quizId);
+        return app(GetQuestionStatisticByQuizIdTask::class)->run($quizId, $params);
     }
 }
