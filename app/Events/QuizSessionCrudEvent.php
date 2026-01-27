@@ -29,13 +29,15 @@ class QuizSessionCrudEvent implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new Channel("quiz.session.$this->operation"),
+            new Channel("quiz.session.{$this->model->id}")
+            //new Channel("quiz.session.$this->operation"),
         ];
     }
 
     public function broadcastAs(): string
     {
-        return "quiz.$this->operation";
+        return "quiz.session.$this->operation";
+        //return "quiz.$this->operation";
     }
 
     public function broadcastWith(): array

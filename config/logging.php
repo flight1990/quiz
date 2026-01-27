@@ -64,6 +64,14 @@ return [
             'level' => 'info',
         ],
 
+        'broadcast_events' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/broadcast_events.log'),
+            'level' => env('LOG_LEVEL', 'debug'),
+            'days' => env('LOG_DAILY_DAYS', 14),
+            'replace_placeholders' => true,
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),
