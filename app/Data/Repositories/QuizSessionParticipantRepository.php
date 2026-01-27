@@ -16,7 +16,7 @@ class QuizSessionParticipantRepository extends BaseRepository
 
     protected array $allowedWith = [
         'session',
-        'guestUser',
+        'guestUser' => ['unit'],
     ];
 
     /**

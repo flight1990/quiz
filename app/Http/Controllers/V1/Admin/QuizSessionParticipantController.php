@@ -16,7 +16,7 @@ class QuizSessionParticipantController extends ApiController
 {
     public function getParticipants(Request $request): ResourceCollection|JsonResource
     {
-        $data = app(GetQuizSessionParticipantsAction::class)->run();
+        $data = app(GetQuizSessionParticipantsAction::class)->run($request->all());
         return $this->respondWithSuccess(QuizSessionParticipantResource::collection($data));
     }
 
