@@ -45,6 +45,11 @@ class QuizSession extends Model
         return $this->hasMany(QuizSessionParticipant::class);
     }
 
+    public function answers(): HasMany
+    {
+        return $this->hasMany(Answer::class, 'quiz_session_id');
+    }
+
     public function questionLogs(): HasMany
     {
         return $this->hasMany(QuizSessionQuestionLog::class);

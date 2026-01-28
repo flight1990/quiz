@@ -14,12 +14,16 @@ class CreateAnswerRequest extends FormRequest
 
     public function rules(): array
     {
-
         $userId = auth('guest-api')->id();
 
         if ($this->has('answers') && is_array($this->input('answers'))) {
             return [
                 'answers' => ['required', 'array', 'min:1'],
+                'answers.*.quiz_session_id' => [
+                    'nullable',
+                    'integer',
+                    'exists:quiz_sessions,id',
+                ],
                 'answers.*.question_id' => [
                     'required',
                     'integer',
@@ -33,6 +37,11 @@ class CreateAnswerRequest extends FormRequest
         }
 
         return [
+            'quiz_session_id' => [
+                'nullable',
+                'integer',
+                'exists:quiz_sessions,id'
+            ],
             'question_id' => [
                 'required',
                 'integer',
