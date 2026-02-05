@@ -4,7 +4,7 @@ namespace App\Data\Criterias;
 
 use Prettus\Repository\Contracts\RepositoryInterface as PrettusRepositoryInterface;
 
-class WhereInFieldCriteria
+class WhereInFieldCriteria extends Criteria
 {
     public function __construct(private string $field, private array $values)
     {
