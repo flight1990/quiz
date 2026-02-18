@@ -38,7 +38,7 @@ class GuestUserController extends ApiController
     public function anonymousToken(Request $request): JsonResponse
     {
         $payload = [
-            'ip_address' => $request->header('X-Real-IP', $request->ip()), // Использует X-Real-IP если есть, иначе стандартный IP //$request->ip(),
+            'ip_address' => $request->header('X-Real-IP', $request->ip()), //  Использует X-Real-IP если есть, иначе стандартный IP //$request->ip(),
             'user_agent' => $request->userAgent(),
         ];
 
