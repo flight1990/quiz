@@ -18,7 +18,7 @@ class MediaController extends ApiController
     public function getMedia(Request $request): ResourceCollection|JsonResource
     {
         $data = app(GetMediaAction::class)->run($request->all());
-        return $this->respondWithSuccess(MediaShortResource::collection($data));
+        return $this->respondWithSuccess(MediaResource::collection($data));
     }
 
     public function createMedia(CreateMediaRequest $request): JsonResponse

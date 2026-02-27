@@ -9,6 +9,16 @@ use Prettus\Repository\Exceptions\RepositoryException;
 
 class MediaRepository extends BaseRepository
 {
+    protected $fieldSearchable = [
+        'id' => '=',
+        'uuid' => 'like',
+        'original_name' => 'like'
+    ];
+
+    protected array $allowedWith = [
+        'questions',
+    ];
+
     /**
      * @throws RepositoryException
      */

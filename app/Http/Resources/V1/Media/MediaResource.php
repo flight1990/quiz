@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Media;
 
+use App\Http\Resources\V1\Questions\QuestionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -26,6 +27,7 @@ class MediaResource extends JsonResource
             'mime_type' => $this->whenHas('mime_type'),
             'extension' => $this->whenHas('extension'),
             'size' => $this->whenHas('size'),
+            'questions' => QuestionResource::collection($this->whenLoaded('questions')),
         ];
     }
 }

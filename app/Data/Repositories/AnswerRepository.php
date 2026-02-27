@@ -12,7 +12,7 @@ class AnswerRepository extends BaseRepository
     protected array $allowedSort = ['id'];
     protected array $allowedWith = [
         'options',
-        'question' => ['options', 'quiz'],
+        'question' => ['options', 'quiz', 'media'],
         'session',
         'guestUser' => ['unit']
     ];
