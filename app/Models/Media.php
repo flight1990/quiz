@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Media extends Model
 {
@@ -16,4 +17,9 @@ class Media extends Model
         'extension',
         'size',
     ];
+
+    public function questions(): MorphToMany
+    {
+        return $this->morphedByMany(Question::class, 'mediable');
+    }
 }

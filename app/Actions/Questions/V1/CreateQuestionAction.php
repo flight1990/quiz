@@ -14,6 +14,12 @@ class CreateQuestionAction extends Action
      */
     public function run(array $payload): Question
     {
-        return app(CreateQuestionSubAction::class)->run($payload);
+        $question = app(CreateQuestionSubAction::class)->run($payload);
+
+        if (isset($payload['media'])) {
+            $question->media()->sync($payload['media']);
+        }
+
+        return $question;
     }
 }

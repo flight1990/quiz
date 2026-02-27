@@ -51,6 +51,8 @@ class UpdateQuestionRequest extends FormRequest
                 'required_if:type,choice',
             ],
             'type' => ['sometimes', 'string', 'in:text,test,choice'],
+            'media' => ['nullable', 'array'],
+            'media.*' => ['integer', 'exists:media,id'],
         ], $optionsRules), $except);
     }
 
