@@ -18,7 +18,7 @@ class CreateMediaRequest extends FormRequest
             'files.*' => [
                 'required',
                 'file',
-                'max:10240',
+                'max:20000',
                 'mimes:jpg,jpeg,png,mp4,pdf'
             ]
         ];

@@ -16,8 +16,8 @@ class UpdateQuestionAction extends Action
     {
         $question = app(UpdateQuestionSubAction::class)->run($payload, $id);
 
-        if (isset($payload['media'])) {
-            $question->media()->sync($payload['media']);
+        if (isset($payload['media_ids'])) {
+            $question->media()->sync($payload['media_ids']);
         }
 
         return $question;

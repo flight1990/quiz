@@ -49,8 +49,8 @@ class CreateQuestionRequest extends FormRequest
                 'required_if:type,choice',
             ],
             'type' => ['required', 'string', 'in:text,test,choice'],
-            'media' => ['nullable', 'array'],
-            'media.*' => ['integer', 'exists:media,id'],
+            'media_ids' => ['sometimes', 'array'],
+            'media_ids.*' => ['integer', 'exists:media,id'],
         ], $optionsRules), $except);
     }
 
