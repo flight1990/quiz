@@ -21,9 +21,7 @@ class MediaShortResource extends JsonResource
             'uuid' => $this->whenHas('uuid'),
             'url' => Storage::disk($this['disk'])->url($this['path']),
             'original_name' => $this->whenHas('original_name'),
-            'mime_type' => $this->whenHas('mime_type'),
             'extension' => $this->whenHas('extension'),
-            'size' => $this->whenHas('size'),
         ];
     }
 }
