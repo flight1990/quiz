@@ -15,6 +15,7 @@ use App\Http\Controllers\V1\Admin\{
     QuizSessionController as AdminQuizSessionController,
     QuizSessionQuestionController as AdminQuizSessionQuestionController,
     QuizSessionParticipantController as AdminQuizSessionParticipantController,
+    MediaController as AdminMediaController,
 };
 use App\Http\Controllers\V1\Guest\{
     QuizController as GuestQuizController,
@@ -152,6 +153,12 @@ Route::prefix('v1')->group(function () {
             Route::get('/', [AdminQuizSessionParticipantController::class, 'getParticipants']);
             Route::get('/{id}', [AdminQuizSessionParticipantController::class, 'findParticipantById']);
             Route::delete('/{id}', [AdminQuizSessionParticipantController::class, 'deleteParticipant']);
+        });
+
+        Route::prefix('media')->group(function () {
+            Route::get('/', [AdminMediaController::class, 'getMedia']);
+            Route::post('/', [AdminMediaController::class, 'createMedia']);
+            Route::delete('/{id}', [AdminMediaController::class, 'deleteMedia']);
         });
     });
 

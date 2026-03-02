@@ -1,24 +1,22 @@
 <?php
 
 namespace App\Data\Repositories;
+
 use App\Data\Criterias\SafeRequestCriteria;
-use App\Models\Quiz;
+use App\Models\Media;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Exceptions\RepositoryException;
 
-class QuizRepository extends BaseRepository
+class MediaRepository extends BaseRepository
 {
     protected $fieldSearchable = [
         'id' => '=',
-        'title' => 'like',
-        'type' => '='
+        'uuid' => 'like',
+        'original_name' => 'like'
     ];
 
-    protected array $allowedSort = ['id', 'is_active', 'is_anonymous', 'title', 'type'];
     protected array $allowedWith = [
-        'questions' => ['options', 'media'],
-        'units' => ['users'],
-        'sessions' => ['user'],
+        'questions',
     ];
 
     /**
@@ -31,6 +29,6 @@ class QuizRepository extends BaseRepository
 
     public function model(): string
     {
-        return Quiz::class;
+        return Media::class;
     }
 }

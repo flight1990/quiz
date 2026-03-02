@@ -19,7 +19,8 @@ class QuestionRepository extends BaseRepository
         'answers' => [
             'options',
             'guestUser' => ['unit']
-        ]
+        ],
+        'media',
     ];
 
     /**
