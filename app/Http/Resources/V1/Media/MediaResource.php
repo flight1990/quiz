@@ -21,6 +21,7 @@ class MediaResource extends JsonResource
             'id' => $this->whenHas('id'),
             'uuid' => $this->whenHas('uuid'),
             'url' => Storage::disk($this['disk'])->url($this['path']),
+            'uri' => 'storage/'.$this['path'],
             'disk' => $this->whenHas('disk'),
             'path' => $this->whenHas('path'),
             'original_name' => $this->whenHas('original_name'),

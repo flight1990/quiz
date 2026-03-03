@@ -17,7 +17,7 @@ class QuizSessionRepository extends BaseRepository
     protected array $allowedWith = [
         'quiz' => ['units'],
         'user',
-        'currentQuestion' => ['options'],
+        'currentQuestion' => ['options', 'media'],
         'participants',
         'answers',
         'questionLogs'
