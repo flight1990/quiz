@@ -3,10 +3,10 @@
 namespace App\Actions\Media\V1;
 
 use App\Actions\Action;
+use App\SubActions\V1\Media\ProcessUploadedFileSubAction;
 use App\Tasks\Media\V1\CreateMediaTask;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class CreateMediaAction extends Action
@@ -24,17 +24,8 @@ class CreateMediaAction extends Action
 
         try {
             foreach ($files as $file) {
-                $path = $file->store('media', 'public');
-
-                $media = app(CreateMediaTask::class)->run([
-                    'uuid' => Str::uuid(),
-                    'disk' => 'public',
-                    'path' => $path,
-                    'original_name' => $file->getClientOriginalName(),
-                    'mime_type' => $file->getMimeType(),
-                    'extension' => $file->getClientOriginalExtension(),
-                    'size' => $file->getSize(),
-                ]);
+                $data = app(ProcessUploadedFileSubAction::class)->run($file);
+                $media = app(CreateMediaTask::class)->run($data);
 
                 $mediaCollection->push($media);
             }
