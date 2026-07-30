@@ -20,7 +20,7 @@ class FindQuizBySlugTask extends Task
     public function run(string $slug): Quiz
     {
         return $this->repository->scopeQuery(function ($q) {
-            return $q->select(['quizzes.id', 'title', 'slug', 'is_anonymous']);
+            return $q->select(['quizzes.id', 'title', 'slug', 'is_anonymous', 'description', 'is_active', 'type']);
         })
             ->with(['units' => function ($q) {
                 return $q->select(['units.id', 'name']);
