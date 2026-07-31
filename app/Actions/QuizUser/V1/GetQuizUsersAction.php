@@ -17,6 +17,10 @@ class GetQuizUsersAction extends Action
             $task->pushCriteria(new WhereFieldCriteria('guest_user_id', $params['guest_user_id']));
         }
 
+        if (isset($params['quiz_id'])) {
+            $task->pushCriteria(new WhereFieldCriteria('quiz_id', $params['quiz_id']));
+        }
+
         return $task->run();
     }
 }
